@@ -19,18 +19,19 @@ import com.vaadin.flow.demo.ComponentDemoServer;
 import com.vaadin.flow.demo.DemoView;
 import com.vaadin.router.Route;
 import com.vaadin.ui.button.Button;
-import com.vaadin.ui.checkbox.Checkbox;
 import com.vaadin.ui.common.HtmlImport;
 import com.vaadin.ui.html.Div;
 
 /**
  * View for {@link Checkbox} demo.
+ * 
+ * @author Vaadin Ltd
  */
 @Route("")
 @HtmlImport("bower_components/vaadin-valo-theme/vaadin-checkbox.html")
 public class CheckboxView extends DemoView {
-	
-	public static void main(String... args) throws Exception {
+
+    public static void main(String... args) throws Exception {
         new ComponentDemoServer().startServer();
     }
 
