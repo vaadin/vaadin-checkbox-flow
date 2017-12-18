@@ -137,7 +137,7 @@ public class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
      * This property is not synchronized automatically from the client side, so
      * the returned value may not be the same as in client side.
      * </p>
-     * 
+     *
      * @return the {@code autofocus} property from the webcomponent
      */
     public boolean isAutofocus() {
@@ -151,7 +151,7 @@ public class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
      * <p>
      * Specify that this control should have input focus when the page loads.
      * </p>
-     * 
+     *
      * @param autofocus
      *            the boolean value to set
      */
@@ -170,7 +170,7 @@ public class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
      * This property is not synchronized automatically from the client side, so
      * the returned value may not be the same as in client side.
      * </p>
-     * 
+     *
      * @return the {@code focused} property from the webcomponent
      */
     public boolean isFocused() {
@@ -187,7 +187,7 @@ public class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
      * This property is not synchronized automatically from the client side, so
      * the returned value may not be the same as in client side.
      * </p>
-     * 
+     *
      * @return the {@code disabled} property from the webcomponent
      */
     public boolean isDisabled() {
@@ -201,7 +201,7 @@ public class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
      * <p>
      * If true, the user cannot interact with this element.
      * </p>
-     * 
+     *
      * @param disabled
      *            the boolean value to set
      */
@@ -219,7 +219,7 @@ public class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
      * This property is synchronized automatically from client side when a
      * 'checked-changed' event happens.
      * </p>
-     * 
+     *
      * @return the {@code checked} property from the webcomponent
      */
     @Synchronize(property = "checked", value = "checked-changed")
@@ -235,7 +235,7 @@ public class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
      * <p>
      * True if the checkbox is checked.
      * </p>
-     * 
+     *
      * @param value
      *            the boolean value to set
      */
@@ -261,7 +261,7 @@ public class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
      * This property is synchronized automatically from client side when a
      * 'indeterminate-changed' event happens.
      * </p>
-     * 
+     *
      * @return the {@code indeterminate} property from the webcomponent
      */
     @Synchronize(property = "indeterminate", value = "indeterminate-changed")
@@ -279,7 +279,7 @@ public class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
      * https://developer.mozilla.org/en-US/docs/Web/
      * HTML/Element/input/checkbox#Indeterminate_state_checkboxes
      * </p>
-     * 
+     *
      * @param indeterminate
      *            the boolean value to set
      */
@@ -297,7 +297,7 @@ public class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
      * This property is not synchronized automatically from the client side, so
      * the returned value may not be the same as in client side.
      * </p>
-     * 
+     *
      * @return the {@code name} property from the webcomponent
      */
     public String getName() {
@@ -311,7 +311,7 @@ public class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
      * <p>
      * The name of the control, which is submitted with the form data.
      * </p>
-     * 
+     *
      * @param name
      *            the String value to set
      */
@@ -330,7 +330,7 @@ public class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
      * This property is not synchronized automatically from the client side, so
      * the returned value may not be the same as in client side.
      * </p>
-     * 
+     *
      * @return the {@code value} property from the webcomponent
      */
     public String getPostValue() {
@@ -345,7 +345,7 @@ public class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
      * The value given to the data submitted with the checkbox's name to the
      * server when the control is inside a form.
      * </p>
-     * 
+     *
      * @param postValue
      *            the String value to set
      */
@@ -374,12 +374,12 @@ public class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
 
     /**
      * Adds the given components as children of this component.
-     * 
+     *
      * @param components
      *            the components to add
      * @see HasComponents#add(Component...)
      */
-    public GeneratedVaadinCheckbox(com.vaadin.ui.Component... components) {
+    public GeneratedVaadinCheckbox(Component... components) {
         add(components);
     }
 
