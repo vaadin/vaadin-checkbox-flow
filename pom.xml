@@ -37,7 +37,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.webjars.bower</groupId>
+            <groupId>org.webjars.bowergithub.vaadin</groupId>
             <artifactId>vaadin-checkbox</artifactId>
         </dependency>
         <dependency>
