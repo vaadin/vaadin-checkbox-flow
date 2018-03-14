@@ -109,7 +109,6 @@ public class Checkbox extends GeneratedVaadinCheckbox<Checkbox>
      * Set the current label text of this checkbox.
      *
      * @param label the label text to set
-     * @return this instance, for method chaining
      */
     public void setLabel(String label) {
         getElement().setText(label);
@@ -119,7 +118,6 @@ public class Checkbox extends GeneratedVaadinCheckbox<Checkbox>
      * Set the accessibility label of this checkbox.
      *
      * @param ariaLabel the accessibility label to set
-     * @return this instance, for method chaining
      * @see <a href=
      * "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute"
      * >aria-label at MDN</a>
