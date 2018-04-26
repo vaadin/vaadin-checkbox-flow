@@ -15,16 +15,17 @@
  */
 package com.vaadin.flow.component.checkbox;
 
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.HasStyle;
-import com.vaadin.flow.component.Focusable;
-import com.vaadin.flow.component.ClickNotifier;
 import javax.annotation.Generated;
-import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.dependency.HtmlImport;
-import com.vaadin.flow.component.Synchronize;
+
+import com.vaadin.flow.component.AbstractSinglePropertyField;
+import com.vaadin.flow.component.ClickNotifier;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Focusable;
+import com.vaadin.flow.component.HasStyle;
+import com.vaadin.flow.component.Synchronize;
+import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.shared.Registration;
 
 /**
@@ -105,8 +106,9 @@ import com.vaadin.flow.shared.Registration;
         "WebComponent: Vaadin.CheckboxElement#2.0.0", "Flow#1.0-SNAPSHOT" })
 @Tag("vaadin-checkbox")
 @HtmlImport("frontend://bower_components/vaadin-checkbox/src/vaadin-checkbox.html")
-public abstract class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R>>
-        extends Component implements HasStyle, Focusable<R>, ClickNotifier<R> {
+public abstract class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<R, T>, T>
+        extends AbstractSinglePropertyField<R, T>
+        implements HasStyle, Focusable<R>, ClickNotifier<R> {
 
     /**
      * <p>

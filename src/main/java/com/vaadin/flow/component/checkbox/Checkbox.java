@@ -17,8 +17,8 @@ package com.vaadin.flow.component.checkbox;
 
 import java.util.Objects;
 
+import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.HasSize;
-import com.vaadin.flow.component.HasValue;
 
 /**
  * Server-side component for the {@code vaadin-checkbox} element.
@@ -29,8 +29,8 @@ import com.vaadin.flow.component.HasValue;
  *
  * @author Vaadin Ltd
  */
-public class Checkbox extends GeneratedVaadinCheckbox<Checkbox>
-        implements HasSize, HasValue<Checkbox, Boolean> {
+public class Checkbox extends GeneratedVaadinCheckbox<Checkbox, Boolean>
+        implements HasSize {
 
     /**
      * Default constructor.
@@ -85,13 +85,15 @@ public class Checkbox extends GeneratedVaadinCheckbox<Checkbox>
      * Constructs a checkbox with the initial label text and value change
      * listener.
      *
-     * @param label    the label text to set
-     * @param listener the value change listener to add
+     * @param label
+     *            the label text to set
+     * @param listener
+     *            the value change listener to add
      * @see #setLabel(String)
-     * @see #addValueChangeListener(HasValue.ValueChangeListener)
+     * @see #addValueChangeListener(AbstractField.ValueChangeListener)
      */
     public Checkbox(String label,
-                    ValueChangeListener<Checkbox, Boolean> listener) {
+            ValueChangeListener<Checkbox, Boolean> listener) {
         this(label);
         addValueChangeListener(listener);
     }
@@ -134,6 +136,7 @@ public class Checkbox extends GeneratedVaadinCheckbox<Checkbox>
      * @param value the value to set, never <code>null</code>
      * @see #isIndeterminate()
      */
+    @Override
     public void setValue(Boolean value) {
         Objects.requireNonNull(value, "Null value not accepted for Checkbox.");
         super.setChecked(value);
@@ -145,6 +148,7 @@ public class Checkbox extends GeneratedVaadinCheckbox<Checkbox>
      * @return the checked state of this checkbox, never <code>null</code>
      * @see #isIndeterminate()
      */
+    @Override
     public Boolean getValue() {
         return isCheckedBoolean();
     }
