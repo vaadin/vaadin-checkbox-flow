@@ -15,8 +15,6 @@
  */
 package com.vaadin.flow.component.checkbox;
 
-import java.util.Objects;
-
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.HasSize;
 
@@ -36,14 +34,16 @@ public class Checkbox extends GeneratedVaadinCheckbox<Checkbox, Boolean>
      * Default constructor.
      */
     public Checkbox() {
+        // set initial value to false is a temporal fix for
+        // https://github.com/vaadin/vaadin-checkbox-flow/issues/22
+        // until the underlying flow issue is fixed
+        // https://github.com/vaadin/flow/issues/3496
+        super(false, false, false);
         getElement().synchronizeProperty("indeterminate",
                 "indeterminate-changed");
         getElement().synchronizeProperty("checked", "checked-changed");
         // https://github.com/vaadin/vaadin-checkbox/issues/25
         setIndeterminate(false);
-        // temporal fix for https://github.com/vaadin/vaadin-checkbox-flow/issues/22
-        // until the underlying flow issue is fixed https://github.com/vaadin/flow/issues/3496
-        setValue(false);
     }
 
     /**
@@ -128,34 +128,6 @@ public class Checkbox extends GeneratedVaadinCheckbox<Checkbox, Boolean>
      */
     public void setAriaLabel(String ariaLabel) {
         getElement().setAttribute("aria-label", ariaLabel);
-    }
-
-    /**
-     * Set whether this checkbox should be checked. Default value is <code>false</code>.
-     *
-     * @param value the value to set, never <code>null</code>
-     * @see #isIndeterminate()
-     */
-    @Override
-    public void setValue(Boolean value) {
-        Objects.requireNonNull(value, "Null value not accepted for Checkbox.");
-        super.setChecked(value);
-    }
-
-    /**
-     * Get the current checked state of this checkbox. The default value is <code>false</code>.
-     *
-     * @return the checked state of this checkbox, never <code>null</code>
-     * @see #isIndeterminate()
-     */
-    @Override
-    public Boolean getValue() {
-        return isCheckedBoolean();
-    }
-
-    @Override
-    public Boolean getEmptyValue() {
-        return Boolean.FALSE;
     }
 
     /**
