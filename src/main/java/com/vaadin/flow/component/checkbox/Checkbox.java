@@ -124,7 +124,9 @@ public class Checkbox extends GeneratedVaadinCheckbox<Checkbox, Boolean>
      * Set the current label text of this checkbox with HTML
      * formatting.
      *
-     * <p>Note, the given html content is not sanitized by the framework.</p>
+     * <p>XSS vulnerability warning: the given HTML is rendered
+     * in the browser as is and the developer is responsible
+     * for ensuring no harmful HTML is used.</p>
      *
      * @param htmlContent
      *            the label html to set
