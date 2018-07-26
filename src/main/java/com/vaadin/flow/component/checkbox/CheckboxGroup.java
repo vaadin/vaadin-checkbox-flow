@@ -261,7 +261,12 @@ public class CheckboxGroup<T>
 
     @Override
     protected boolean hasValidValue() {
-        return getSelectedItems().stream().allMatch(itemEnabledProvider);
+        Set<T> selectedItems = presentationToModel(this,
+                (JsonArray) getElement().getPropertyRaw("value"));
+        if (selectedItems == null || selectedItems.isEmpty()) {
+            return true;
+        }
+        return selectedItems.stream().allMatch(itemEnabledProvider);
     }
 
     private void reset() {
@@ -345,8 +350,7 @@ public class CheckboxGroup<T>
         JsonArray array = (JsonArray) presentation;
         Set<T> set = new HashSet<>();
         for (int i = 0; i < array.length(); i++) {
-            Object item = array.get(i);
-            set.add(group.keyMapper.get(item == null ? null : item.toString()));
+            set.add(group.keyMapper.get(array.getString(i)));
         }
         return set;
     }
