@@ -76,11 +76,10 @@ public class CheckboxGroupIT extends ComponentDemoTest {
 
     @Test
     public void disabledGroupItems() {
-        WebElement group = layout
-                .findElement(By.id("checkbox-group-disabled-items"));
+        TestBenchElement group = $(TestBenchElement.class)
+                .id("checkbox-group-disabled-items");
 
-        List<WebElement> checkboxes = group
-                .findElements(By.tagName("vaadin-checkbox"));
+        List<TestBenchElement> checkboxes = group.$("vaadin-checkbox").all();
 
         Assert.assertEquals(Boolean.TRUE.toString(),
                 checkboxes.get(1).getAttribute("disabled"));
@@ -100,7 +99,7 @@ public class CheckboxGroupIT extends ComponentDemoTest {
                 checkboxes.get(1));
 
         getCommandExecutor().executeScript("arguments[0].click()",
-                checkboxes.get(1));
+                checkboxes.get(1).$("input").first());
 
         try {
             waitUntil(
