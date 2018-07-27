@@ -94,8 +94,7 @@ public class CheckboxGroupIT extends ComponentDemoTest {
         WebElement infoLabel = layout
                 .findElement(By.id("checkbox-group-disabled-items-info"));
 
-        Assert.assertEquals("'foo' should be selected", "[foo]",
-                infoLabel.getText());
+        waitUntil(driver -> "[foo]".equals(infoLabel.getText()));
 
         executeScript("arguments[0].removeAttribute(\"disabled\");",
                 checkboxes.get(1));
@@ -148,7 +147,7 @@ public class CheckboxGroupIT extends ComponentDemoTest {
 
         getCommandExecutor().executeScript("arguments[0].click()",
                 checkboxes.get(1));
-        Assert.assertEquals("[bar]", valueInfo.getText());
+        waitUntil(driver -> "[bar]".equals(valueInfo.getText()));
 
         // make it read-only again
         new Actions(getDriver()).moveToElement(switchReadOnly).click().build()
