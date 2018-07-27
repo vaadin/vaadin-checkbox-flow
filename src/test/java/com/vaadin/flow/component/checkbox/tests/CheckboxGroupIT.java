@@ -88,8 +88,8 @@ public class CheckboxGroupIT extends ComponentDemoTest {
         scrollToElement(group);
         getCommandExecutor().executeScript("window.scrollBy(0,50);");
 
-        new Actions(getDriver()).moveToElement(checkboxes.get(0)).click()
-                .build().perform();
+        getCommandExecutor().executeScript("arguments[0].click()",
+                checkboxes.get(0));
 
         WebElement infoLabel = layout
                 .findElement(By.id("checkbox-group-disabled-items-info"));
@@ -100,8 +100,8 @@ public class CheckboxGroupIT extends ComponentDemoTest {
         executeScript("arguments[0].removeAttribute(\"disabled\");",
                 checkboxes.get(1));
 
-        new Actions(getDriver()).moveToElement(checkboxes.get(1)).click()
-                .build().perform();
+        getCommandExecutor().executeScript("arguments[0].click()",
+                checkboxes.get(1));
 
         try {
             waitUntil(
@@ -146,8 +146,8 @@ public class CheckboxGroupIT extends ComponentDemoTest {
         new Actions(getDriver()).moveToElement(switchReadOnly).click().build()
                 .perform();
 
-        new Actions(getDriver()).moveToElement(checkboxes.get(1)).click()
-                .build().perform();
+        getCommandExecutor().executeScript("arguments[0].click()",
+                checkboxes.get(1));
         Assert.assertEquals("[bar]", valueInfo.getText());
 
         // make it read-only again
@@ -155,8 +155,8 @@ public class CheckboxGroupIT extends ComponentDemoTest {
                 .perform();
 
         // click to the first item
-        new Actions(getDriver()).moveToElement(checkboxes.get(0)).click()
-                .build().perform();
+        getCommandExecutor().executeScript("arguments[0].click()",
+                checkboxes.get(0));
 
         // Nothing has changed
         Assert.assertEquals("[bar]", valueInfo.getText());
