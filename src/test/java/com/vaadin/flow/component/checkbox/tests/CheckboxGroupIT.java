@@ -48,7 +48,6 @@ public class CheckboxGroupIT extends ComponentDemoTest {
 
         executeScript("arguments[0].value=['1','2'];", group);
 
-        System.out.println(valueDiv.getText());
         waitUntil(
                 driver -> "Checkbox group value changed from '[bar]' to '[bar, foo]'"
                         .equals(valueDiv.getText()));
@@ -109,7 +108,7 @@ public class CheckboxGroupIT extends ComponentDemoTest {
                     driver -> group.findElements(By.tagName("vaadin-checkbox"))
                             .get(1).getAttribute("disabled") != null);
         } catch (WebDriverException wde) {
-            Assert.fail("Server should have disabled the button again.");
+            Assert.fail("Server should have disabled the checkbox again.");
         }
 
         Assert.assertEquals("Value 'foo' should have been re-selected", "[foo]",
@@ -125,19 +124,19 @@ public class CheckboxGroupIT extends ComponentDemoTest {
         WebElement group = layout
                 .findElement(By.id("checkbox-group-read-only"));
 
-        List<WebElement> buttons = group
+        List<WebElement> checkboxes = group
                 .findElements(By.tagName("vaadin-checkbox"));
 
         Assert.assertEquals(Boolean.TRUE.toString(),
-                buttons.get(1).getAttribute("disabled"));
+                checkboxes.get(1).getAttribute("disabled"));
         Assert.assertEquals(Boolean.TRUE.toString(),
                 group.getAttribute("disabled"));
 
         scrollToElement(group);
         getCommandExecutor().executeScript("window.scrollBy(0,50);");
 
-        new Actions(getDriver()).moveToElement(buttons.get(1)).click().build()
-                .perform();
+        new Actions(getDriver()).moveToElement(checkboxes.get(1)).click()
+                .build().perform();
 
         WebElement valueInfo = layout.findElement(By.id("selected-value-info"));
         Assert.assertEquals("", valueInfo.getText());
@@ -147,8 +146,8 @@ public class CheckboxGroupIT extends ComponentDemoTest {
         new Actions(getDriver()).moveToElement(switchReadOnly).click().build()
                 .perform();
 
-        new Actions(getDriver()).moveToElement(buttons.get(1)).click().build()
-                .perform();
+        new Actions(getDriver()).moveToElement(checkboxes.get(1)).click()
+                .build().perform();
         Assert.assertEquals("[bar]", valueInfo.getText());
 
         // make it read-only again
@@ -156,8 +155,8 @@ public class CheckboxGroupIT extends ComponentDemoTest {
                 .perform();
 
         // click to the first item
-        new Actions(getDriver()).moveToElement(buttons.get(0)).click().build()
-                .perform();
+        new Actions(getDriver()).moveToElement(checkboxes.get(0)).click()
+                .build().perform();
 
         // Nothing has changed
         Assert.assertEquals("[bar]", valueInfo.getText());
@@ -194,7 +193,7 @@ public class CheckboxGroupIT extends ComponentDemoTest {
 
     private void verifyGroupInvalid(TestBenchElement group,
             TestBenchElement errorMessage) {
-        Assert.assertEquals("Radio button group is invalid.", true,
+        Assert.assertEquals("Checkbox group is invalid.", true,
                 group.getPropertyBoolean("invalid"));
         Assert.assertEquals("Error message should be shown.",
                 Boolean.FALSE.toString(),
