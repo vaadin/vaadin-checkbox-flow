@@ -55,6 +55,8 @@ public class CheckboxGroup<T>
         implements HasItemsAndComponents<T>, HasSize, HasValidation,
         MultiSelect<CheckboxGroup<T>, T>, HasDataProvider<T> {
 
+    private static final String VALUE = "value";
+
     private final KeyMapper<T> keyMapper = new KeyMapper<>();
 
     private DataProvider<T, ?> dataProvider = DataProvider.ofItems();
@@ -75,7 +77,7 @@ public class CheckboxGroup<T>
 
         private CheckBoxItem(String id, T item) {
             this.item = item;
-            getElement().setProperty("value", id);
+            getElement().setProperty(VALUE, id);
         }
 
         @Override
@@ -262,7 +264,7 @@ public class CheckboxGroup<T>
     @Override
     protected boolean hasValidValue() {
         Set<T> selectedItems = presentationToModel(this,
-                (JsonArray) getElement().getPropertyRaw("value"));
+                (JsonArray) getElement().getPropertyRaw(VALUE));
         if (selectedItems == null || selectedItems.isEmpty()) {
             return true;
         }
@@ -322,7 +324,7 @@ public class CheckboxGroup<T>
             // return the value back on the client side
             try {
                 validationRegistration.remove();
-                getElement().setPropertyJson("value",
+                getElement().setPropertyJson(VALUE,
                         modelToPresentation(this, oldValue));
             } finally {
                 registerValidation();
@@ -340,7 +342,7 @@ public class CheckboxGroup<T>
         if (validationRegistration != null) {
             validationRegistration.remove();
         }
-        validationRegistration = getElement().addPropertyChangeListener("value",
+        validationRegistration = getElement().addPropertyChangeListener(VALUE,
                 validationListener);
     }
 
