@@ -85,16 +85,16 @@ public class CheckboxGroupIT extends ComponentDemoTest {
                 checkboxes.get(1).getAttribute("disabled"));
 
         scrollToElement(group);
-        getCommandExecutor().executeScript("window.scrollBy(0,50);");
 
-        checkboxes.get(0).$("input").first().click();
+        executeScript("arguments[0].value=['1'];", group);
 
         WebElement infoLabel = layout
                 .findElement(By.id("checkbox-group-disabled-items-info"));
 
-        waitUntil(driver -> "[foo]".equals(infoLabel.getText()));
+        Assert.assertEquals("'foo' should be selected", "[foo]",
+                infoLabel.getText());
 
-        checkboxes.get(1).$("input").first().click();
+        executeScript("arguments[0].value=['1','2'];", group);
 
         try {
             waitUntil(
@@ -128,8 +128,7 @@ public class CheckboxGroupIT extends ComponentDemoTest {
         scrollToElement(group);
         getCommandExecutor().executeScript("window.scrollBy(0,50);");
 
-        new Actions(getDriver()).moveToElement(checkboxes.get(1)).click()
-                .build().perform();
+        executeScript("arguments[0].value=['2'];", group);
 
         WebElement valueInfo = layout.findElement(By.id("selected-value-info"));
         Assert.assertEquals("", valueInfo.getText());
@@ -139,17 +138,15 @@ public class CheckboxGroupIT extends ComponentDemoTest {
         new Actions(getDriver()).moveToElement(switchReadOnly).click().build()
                 .perform();
 
-        getCommandExecutor().executeScript("arguments[0].click()",
-                checkboxes.get(1));
-        waitUntil(driver -> "[bar]".equals(valueInfo.getText()));
+        executeScript("arguments[0].value=['2'];", group);
+        Assert.assertEquals("[bar]", valueInfo.getText());
 
         // make it read-only again
         new Actions(getDriver()).moveToElement(switchReadOnly).click().build()
                 .perform();
 
         // click to the first item
-        getCommandExecutor().executeScript("arguments[0].click()",
-                checkboxes.get(0));
+        executeScript("arguments[0].value=['1'];", group);
 
         // Nothing has changed
         Assert.assertEquals("[bar]", valueInfo.getText());
