@@ -87,19 +87,14 @@ public class CheckboxGroupIT extends ComponentDemoTest {
         scrollToElement(group);
         getCommandExecutor().executeScript("window.scrollBy(0,50);");
 
-        getCommandExecutor().executeScript("arguments[0].click()",
-                checkboxes.get(0));
+        checkboxes.get(0).$("input").first().click();
 
         WebElement infoLabel = layout
                 .findElement(By.id("checkbox-group-disabled-items-info"));
 
         waitUntil(driver -> "[foo]".equals(infoLabel.getText()));
 
-        executeScript("arguments[0].removeAttribute(\"disabled\");",
-                checkboxes.get(1));
-
-        getCommandExecutor().executeScript("arguments[0].click()",
-                checkboxes.get(1).$("input").first());
+        checkboxes.get(1).$("input").first().click();
 
         try {
             waitUntil(
