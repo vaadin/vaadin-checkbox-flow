@@ -113,7 +113,7 @@ public class CheckboxGroupView extends DemoView {
                 new Person("Bill"));
         group.setItemLabelGenerator(Person::getName);
         group.addValueChangeListener(event -> message.setText(String.format(
-                "Radio button group value changed from '%s' to '%s'",
+                "Checkbox group value changed from '%s' to '%s'",
                 getNames(event.getOldValue()), getNames(event.getValue()))));
         // end-source-example
 
