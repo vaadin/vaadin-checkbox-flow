@@ -95,7 +95,7 @@ public class CheckboxGroupTest {
     }
 
     @Test
-    public void unsetReadOnlyEnabledChdckboxGroup_groupIsEnabled() {
+    public void unsetReadOnlyEnabledCheckboxGroup_groupIsEnabled() {
         CheckboxGroup<String> group = new CheckboxGroup<>();
         group.setEnabled(false);
         group.setReadOnly(true);

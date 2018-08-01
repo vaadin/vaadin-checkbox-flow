@@ -134,14 +134,14 @@ public class CheckboxGroupView extends DemoView {
 
         group.setId("checkbox-group-disabled");
 
-        addCard("Disabled checkbox button group", group);
+        addCard("Disabled checkbox group", group);
     }
 
     private void addDisabledItems() {
 
         Div valueInfo = new Div();
         // begin-source-example
-        // source-example-heading: Checkbox button group with item enabled
+        // source-example-heading: Checkbox group with item enabled
         // provider
         CheckboxGroup<String> group = new CheckboxGroup<>();
         group.setItems("foo", "bar", "baz");
@@ -159,7 +159,7 @@ public class CheckboxGroupView extends DemoView {
 
     private void addReadOnlyGroup() {
         // begin-source-example
-        // source-example-heading: Read-only radio button group
+        // source-example-heading: Read-only checkbox group
         Div valueInfo = new Div();
 
         CheckboxGroup<String> group = new CheckboxGroup<>();

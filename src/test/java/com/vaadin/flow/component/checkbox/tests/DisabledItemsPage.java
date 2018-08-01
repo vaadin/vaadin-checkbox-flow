@@ -25,11 +25,7 @@ public class DisabledItemsPage extends DemoView {
 
     @Override
     protected void initView() {
-        DisabledItemsPage();
-    }
-
-    public void DisabledItemsPage() {
-        CheckboxGroup<String> checkboxGroup = new CheckboxGroup();
+        CheckboxGroup<String> checkboxGroup = new CheckboxGroup<>();
         checkboxGroup.setId("checkbox-group");
         checkboxGroup.setEnabled(false);
 
@@ -39,4 +35,5 @@ public class DisabledItemsPage extends DemoView {
 
         add(checkboxGroup, nativeButton);
     }
+
 }

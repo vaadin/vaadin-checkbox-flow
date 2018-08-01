@@ -164,11 +164,11 @@ public class CheckboxGroup<T>
     }
 
     /**
-     * Sets the item enabled predicate for this radio button group. The
-     * predicate is applied to each item to determine whether the item should be
-     * enabled ({@code true}) or disabled ({@code false}). Disabled items are
-     * displayed as grayed out and the user cannot select them. The default
-     * predicate always returns true (all the items are enabled).
+     * Sets the item enabled predicate for this checkbox group. The predicate is
+     * applied to each item to determine whether the item should be enabled
+     * ({@code true}) or disabled ({@code false}). Disabled items are displayed
+     * as grayed out and the user cannot select them. The default predicate
+     * always returns true (all the items are enabled).
      *
      * @param itemEnabledProvider
      *            the item enable predicate, not {@code null}
