@@ -45,8 +45,12 @@ public class CheckboxView extends DemoView {
         // source-example-heading: Default Checkbox
         Checkbox checkbox = new Checkbox();
         checkbox.setLabel("Default Checkbox");
+
+        checkbox.setVisible(false);
+        NativeButton button = new NativeButton("Hide",
+                event -> checkbox.setVisible(!checkbox.isVisible()));
         // end-source-example
-        addCard("Default Checkbox", checkbox);
+        addCard("Default Checkbox", checkbox, button);
         checkbox.setId("default-checkbox");
     }
 
@@ -115,7 +119,8 @@ public class CheckboxView extends DemoView {
         // begin-source-example
         // source-example-heading: Checkbox with simple html markup in the label
         Checkbox checkbox = new Checkbox();
-        checkbox.setLabelAsHtml("Accept the <a href='https://vaadin.com/privacy-policy'>privacy policy</a>");
+        checkbox.setLabelAsHtml(
+                "Accept the <a href='https://vaadin.com/privacy-policy'>privacy policy</a>");
         // end-source-example
         addCard("Checkbox with simple html markup in the label", checkbox);
         checkbox.setId("html-checkbox");
