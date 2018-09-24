@@ -57,7 +57,7 @@ public class CheckboxGroup<T>
 
     private static final String VALUE = "value";
 
-    private final KeyMapper<T> keyMapper = new KeyMapper<T>(this::getItemId);
+    private final KeyMapper<T> keyMapper = new KeyMapper<>(this::getItemId);
 
     private DataProvider<T, ?> dataProvider = DataProvider.ofItems();
 
