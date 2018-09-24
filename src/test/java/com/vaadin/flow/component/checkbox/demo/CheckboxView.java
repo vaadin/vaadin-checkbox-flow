@@ -45,12 +45,8 @@ public class CheckboxView extends DemoView {
         // source-example-heading: Default Checkbox
         Checkbox checkbox = new Checkbox();
         checkbox.setLabel("Default Checkbox");
-
-        checkbox.setVisible(false);
-        NativeButton button = new NativeButton("Hide",
-                event -> checkbox.setVisible(!checkbox.isVisible()));
         // end-source-example
-        addCard("Default Checkbox", checkbox, button);
+        addCard("Default Checkbox", checkbox);
         checkbox.setId("default-checkbox");
     }
 
