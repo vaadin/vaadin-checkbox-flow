@@ -28,6 +28,7 @@ import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.data.binder.HasDataProvider;
 import com.vaadin.flow.data.binder.HasItemsAndComponents;
+import com.vaadin.flow.data.provider.DataChangeEvent;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.KeyMapper;
 import com.vaadin.flow.data.provider.Query;
@@ -104,7 +105,16 @@ public class CheckboxGroup<T>
             dataProviderListenerRegistration.remove();
         }
         dataProviderListenerRegistration = dataProvider
-                .addDataProviderListener(event -> reset());
+                .addDataProviderListener(event -> {
+                    if (event instanceof DataChangeEvent.DataRefreshEvent) {
+                        T t = ((DataChangeEvent.DataRefreshEvent<T>) event).getItem();
+                        this.getCheckboxItems().filter(item -> Objects.equals(item.item, t))
+                                .findFirst()
+                                .ifPresent(this::updateCheckbox);
+                    } else {
+                        reset();
+                    }
+                });
     }
 
     @Override
@@ -177,8 +187,7 @@ public class CheckboxGroup<T>
      * as grayed out and the user cannot select them. The default predicate
      * always returns true (all the items are enabled).
      *
-     * @param itemEnabledProvider
-     *            the item enable predicate, not {@code null}
+     * @param itemEnabledProvider the item enable predicate, not {@code null}
      */
     public void setItemEnabledProvider(
             SerializablePredicate<T> itemEnabledProvider) {
@@ -191,8 +200,7 @@ public class CheckboxGroup<T>
      * in the checkbox group for each item. By default,
      * {@link String#valueOf(Object)} is used.
      *
-     * @param itemLabelGenerator
-     *            the item label provider to use, not null
+     * @param itemLabelGenerator the item label provider to use, not null
      */
     public void setItemLabelGenerator(
             ItemLabelGenerator<T> itemLabelGenerator) {
@@ -371,7 +379,7 @@ public class CheckboxGroup<T>
     }
 
     private static <T> Set<T> presentationToModel(CheckboxGroup<T> group,
-            JsonArray presentation) {
+                                                  JsonArray presentation) {
         JsonArray array = presentation;
         Set<T> set = new HashSet<>();
         for (int i = 0; i < array.length(); i++) {
@@ -381,7 +389,7 @@ public class CheckboxGroup<T>
     }
 
     private static <T> JsonArray modelToPresentation(CheckboxGroup<T> group,
-            Set<T> model) {
+                                                     Set<T> model) {
         JsonArray array = Json.createArray();
         if (model.isEmpty()) {
             return array;
