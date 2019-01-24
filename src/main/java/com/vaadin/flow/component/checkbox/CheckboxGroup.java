@@ -187,7 +187,8 @@ public class CheckboxGroup<T>
      * as grayed out and the user cannot select them. The default predicate
      * always returns true (all the items are enabled).
      *
-     * @param itemEnabledProvider the item enable predicate, not {@code null}
+     * @param itemEnabledProvider
+     *            the item enable predicate, not {@code null}
      */
     public void setItemEnabledProvider(
             SerializablePredicate<T> itemEnabledProvider) {
@@ -200,7 +201,8 @@ public class CheckboxGroup<T>
      * in the checkbox group for each item. By default,
      * {@link String#valueOf(Object)} is used.
      *
-     * @param itemLabelGenerator the item label provider to use, not null
+     * @param itemLabelGenerator
+     *            the item label provider to use, not null
      */
     public void setItemLabelGenerator(
             ItemLabelGenerator<T> itemLabelGenerator) {
