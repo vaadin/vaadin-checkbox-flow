@@ -107,8 +107,8 @@ public class CheckboxGroup<T>
         dataProviderListenerRegistration = dataProvider
                 .addDataProviderListener(event -> {
                     if (event instanceof DataChangeEvent.DataRefreshEvent) {
-                        T t = ((DataChangeEvent.DataRefreshEvent<T>) event).getItem();
-                        this.getCheckboxItems().filter(item -> Objects.equals(item.item, t))
+                        T otherItem = ((DataChangeEvent.DataRefreshEvent<T>) event).getItem();
+                        this.getCheckboxItems().filter(item -> Objects.equals(getItemId(item.item), getItemId(otherItem)))
                                 .findFirst()
                                 .ifPresent(this::updateCheckbox);
                     } else {
