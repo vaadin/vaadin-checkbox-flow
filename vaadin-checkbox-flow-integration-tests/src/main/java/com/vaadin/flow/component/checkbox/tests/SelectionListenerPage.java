@@ -32,7 +32,6 @@ public class SelectionListenerPage extends Div {
         CheckboxGroup<String> checkboxGroup = new CheckboxGroup<>();
         checkboxGroup.setItems("foo", "bar");
 
-        // event handler is not invoked
         checkboxGroup.addSelectionListener(event -> {
             Set<String> addedSelection = event.getNewSelection();
             String selected = addedSelection.stream().sorted()
