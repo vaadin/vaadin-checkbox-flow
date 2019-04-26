@@ -1,14 +1,17 @@
-<link rel="import" href="/frontend/bower_components/polymer/polymer-element.html">
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {html} from '@polymer/polymer/lib/utils/html-tag.js';
+import '@vaadin/vaadin-checkbox/vaadin-checkbox.js';
 
-<dom-module id="inject-checkbox">
-  <template>
+class InjectChecbox extends PolymerElement {
+    static get template() {
+      return html`
     <vaadin-checkbox id="accept">Accept</vaadin-checkbox>
     <div id="div">A</div>
-  </template>
-  <script>
-    class InjectChecbox extends Polymer.Element {
-      static get is() { return 'inject-checkbox' }
-    }
-    customElements.define(InjectChecbox.is, InjectChecbox);
-  </script>
-</dom-module>
+`;
+  }
+      static get is() {
+      return 'inject-checkbox'
+  }
+}
+
+customElements.define(InjectChecbox.is, InjectChecbox);
