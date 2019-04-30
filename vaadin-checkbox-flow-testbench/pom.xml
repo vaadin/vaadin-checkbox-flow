@@ -10,7 +10,7 @@
         <version>1.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>vaadin-checkbox-flow-testbench</artifactId>
+    <artifactId>vaadin-checkbox-testbench</artifactId>
     <packaging>jar</packaging>
     <name>Vaadin Checkbox Testbench API</name>
 
