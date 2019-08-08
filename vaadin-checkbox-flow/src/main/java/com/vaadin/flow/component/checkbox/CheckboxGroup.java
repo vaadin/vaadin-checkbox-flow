@@ -94,11 +94,6 @@ public class CheckboxGroup<T>
                 CheckboxGroup::presentationToModel,
                 CheckboxGroup::modelToPresentation);
         registerValidation();
-        addAttachListener(e -> {
-            if (getValue().equals(getEmptyValue())) {
-                getDataProvider().refreshAll();
-            }
-        });
     }
 
     @Override
@@ -131,6 +126,12 @@ public class CheckboxGroup<T>
         value.addAll(addedItems);
         value.removeAll(removedItems);
         setValue(value);
+    }
+
+    @Override
+    public void deselectAll() {
+        getSelectedItems().forEach(this::deselect);
+        getDataProvider().refreshAll();
     }
 
     /**
