@@ -94,6 +94,11 @@ public class CheckboxGroup<T>
                 CheckboxGroup::presentationToModel,
                 CheckboxGroup::modelToPresentation);
         registerValidation();
+        addAttachListener(e -> {
+            if (getValue().equals(getEmptyValue())) {
+                getDataProvider().refreshAll();
+            }
+        });
     }
 
     @Override
