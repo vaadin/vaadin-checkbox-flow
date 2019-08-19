@@ -189,6 +189,28 @@ public class CheckboxGroupTest {
     }
 
     @Test
+    public void deselectAll_selectionIsReset() {
+        CheckboxGroup<String> checkboxGroup = new CheckboxGroup<>();
+        checkboxGroup.setItems("Foo", "Bar");
+
+        AtomicReference<Set<String>> capture = new AtomicReference<>();
+        checkboxGroup
+                .addValueChangeListener(event -> capture.set(event.getValue()));
+
+        checkboxGroup.setValue(Collections.singleton("Foo"));
+
+        Assert.assertEquals(Collections.singleton("Foo"), capture.get());
+
+        Assert.assertEquals(Collections.singleton("Foo"),
+                checkboxGroup.getValue());
+
+        checkboxGroup.deselectAll();
+
+        Assert.assertThat(checkboxGroup.getValue(), IsEmptyCollection.empty());
+        Assert.assertThat(capture.get(), IsEmptyCollection.empty());
+    }
+
+    @Test
     public void singleDataRefreshEvent() {
         Wrapper item1 = new Wrapper(1, "foo");
         Wrapper item2 = new Wrapper(2, "bar");

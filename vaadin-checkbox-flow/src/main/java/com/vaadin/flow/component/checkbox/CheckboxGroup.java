@@ -152,6 +152,9 @@ public class CheckboxGroup<T>
         Objects.requireNonNull(value,
                 "Cannot set a null value to checkbox group. "
                         + "Use the clear-method to reset the component's value to an empty set.");
+        if (value == getEmptyValue()) {
+            deselectAll();
+        }
         super.setValue(value);
     }
 
