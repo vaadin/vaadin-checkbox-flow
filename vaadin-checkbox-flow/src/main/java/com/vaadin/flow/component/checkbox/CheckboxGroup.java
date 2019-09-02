@@ -128,12 +128,6 @@ public class CheckboxGroup<T>
         setValue(value);
     }
 
-    @Override
-    public void deselectAll() {
-        getSelectedItems().forEach(this::deselect);
-        getDataProvider().refreshAll();
-    }
-
     /**
      * Sets the value of this component. If the new value is not equal to the
      * previous value, fires a value change event.
@@ -152,10 +146,8 @@ public class CheckboxGroup<T>
         Objects.requireNonNull(value,
                 "Cannot set a null value to checkbox group. "
                         + "Use the clear-method to reset the component's value to an empty set.");
-        if (value == getEmptyValue()) {
-            deselectAll();
-        }
         super.setValue(value);
+        refreshCheckboxes();
     }
 
     @Override
@@ -367,6 +359,9 @@ public class CheckboxGroup<T>
     private void updateCheckbox(CheckBoxItem<T> checkbox) {
         checkbox.setLabel(getItemLabelGenerator().apply(checkbox.getItem()));
         updateEnabled(checkbox);
+        checkbox.setValue(getValue().stream().anyMatch(
+                selectedItem -> Objects.equals(getItemId(selectedItem),
+                        getItemId(checkbox.getItem()))));
     }
 
     private void updateEnabled(CheckBoxItem<T> checkbox) {
