@@ -195,12 +195,12 @@ public class CheckboxGroupView extends DemoView {
         Binder<Employee> binder = new Binder<>();
 
         CheckboxGroup<String> checkboxGroup = new CheckboxGroup<>();
-        checkboxGroup.setLabel("Department");
+        checkboxGroup.setLabel("Employee title");
         checkboxGroup.setItems("Account Manager", "Designer",
                 "Marketing Manager", "Developer");
         checkboxGroup.addThemeVariants(CheckboxGroupVariant.LUMO_VERTICAL);
 
-        binder.forField(checkboxGroup).asRequired("Please choose a department")
+        binder.forField(checkboxGroup).asRequired("Please choose an employee title")
                 .bind(Employee::getTitle, Employee::setTitle);
 
         Button button = new Button("Submit", event -> {
