@@ -32,7 +32,6 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.demo.DemoView;
 import com.vaadin.flow.router.Route;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -158,23 +157,19 @@ public class CheckboxGroupView extends DemoView {
         Set<String> items = new LinkedHashSet<>(
                 Arrays.asList("Option one", "Option two"));
         checkboxGroup.setItems(items);
-        List<CheckboxGroup> checkboxList = new ArrayList<>();
-        checkboxList.add(checkboxGroup);
+        checkboxGroup.setValue(Collections.singleton("Option one"));
         checkboxGroup.addThemeVariants(CheckboxGroupVariant.LUMO_VERTICAL);
-        checkboxGroup.addValueChangeListener(
-                checkboxGroupSetComponentValueChangeEvent -> {
-                    if (checkboxGroupSetComponentValueChangeEvent.getValue()
-                            .size() == items.size()) {
-                        checkbox.setValue(true);
-                        checkbox.setIndeterminate(false);
-                    } else if (checkboxGroupSetComponentValueChangeEvent
-                            .getValue().size() == 0) {
-                        checkbox.setValue(false);
-                        checkbox.setIndeterminate(false);
-                    } else
-                        checkbox.setIndeterminate(true);
+        checkboxGroup.addValueChangeListener(event -> {
+            if (event.getValue().size() == items.size()) {
+                checkbox.setValue(true);
+                checkbox.setIndeterminate(false);
+            } else if (event.getValue().size() == 0) {
+                checkbox.setValue(false);
+                checkbox.setIndeterminate(false);
+            } else
+                checkbox.setIndeterminate(true);
 
-                });
+        });
         checkbox.addValueChangeListener(event -> {
 
             if (checkbox.getValue()) {
@@ -200,7 +195,8 @@ public class CheckboxGroupView extends DemoView {
                 "Marketing Manager", "Developer");
         checkboxGroup.addThemeVariants(CheckboxGroupVariant.LUMO_VERTICAL);
 
-        binder.forField(checkboxGroup).asRequired("Please choose an employee title")
+        binder.forField(checkboxGroup)
+                .asRequired("Please choose an employee title")
                 .bind(Employee::getTitle, Employee::setTitle);
 
         Button button = new Button("Submit", event -> {
