@@ -152,12 +152,10 @@ public class CheckboxGroupView extends DemoView {
         // begin-source-example
         // source-example-heading: Indeterminate checkbox
         Checkbox checkbox = new Checkbox("Select all");
-        checkbox.setIndeterminate(true);
         CheckboxGroup<String> checkboxGroup = new CheckboxGroup<>();
         Set<String> items = new LinkedHashSet<>(
                 Arrays.asList("Option one", "Option two"));
         checkboxGroup.setItems(items);
-        checkboxGroup.setValue(Collections.singleton("Option one"));
         checkboxGroup.addThemeVariants(CheckboxGroupVariant.LUMO_VERTICAL);
         checkboxGroup.addValueChangeListener(event -> {
             if (event.getValue().size() == items.size()) {
@@ -178,6 +176,7 @@ public class CheckboxGroupView extends DemoView {
                 checkboxGroup.deselectAll();
             }
         });
+        checkboxGroup.setValue(Collections.singleton("Option one"));
         // end-source-example
 
         addCard("Indeterminate checkbox", checkbox, checkboxGroup);
