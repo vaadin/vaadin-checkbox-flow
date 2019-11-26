@@ -54,7 +54,7 @@ public class CheckboxGroupView extends DemoView {
         entityList();
         valueChangeEvent();
         indeterminateCheckbox();
-        configurationForReqired(); // Validation
+        configurationForRequired(); // Validation
         themeVariantsHorizontal();// Theme Variants
         styling(); // Styling
     }
@@ -182,21 +182,21 @@ public class CheckboxGroupView extends DemoView {
         addCard("Indeterminate checkbox", checkbox, checkboxGroup);
     }
 
-    private void configurationForReqired() {
+    private void configurationForRequired() {
         // begin-source-example
         // source-example-heading: Required
         Employee employee = new Employee();
         Binder<Employee> binder = new Binder<>();
 
         CheckboxGroup<String> checkboxGroup = new CheckboxGroup<>();
-        checkboxGroup.setLabel("Employee title");
+        checkboxGroup.setLabel("Employee titles");
         checkboxGroup.setItems("Account Manager", "Designer",
                 "Marketing Manager", "Developer");
         checkboxGroup.addThemeVariants(CheckboxGroupVariant.LUMO_VERTICAL);
 
         binder.forField(checkboxGroup)
-                .asRequired("Please choose an employee title")
-                .bind(Employee::getTitle, Employee::setTitle);
+                .asRequired("Please choose employee titles")
+                .bind(Employee::getTitles, Employee::setTitles);
 
         Button button = new Button("Submit", event -> {
             if (binder.writeBeanIfValid(employee)) {
@@ -251,14 +251,14 @@ public class CheckboxGroupView extends DemoView {
     }
 
     private static class Employee {
-        private Set<String> title;
+        private Set<String> titles;
 
-        public Set<String> getTitle() {
-            return title;
+        public Set<String> getTitles() {
+            return titles;
         }
 
-        public void setTitle(Set<String> title) {
-            this.title = title;
+        public void setTitles(Set<String> titles) {
+            this.titles = titles;
         }
     }
 }
