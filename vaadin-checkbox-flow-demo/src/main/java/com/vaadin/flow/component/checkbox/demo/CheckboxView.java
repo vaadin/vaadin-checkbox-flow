@@ -19,24 +19,31 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
 import com.vaadin.flow.component.checkbox.CheckboxGroupVariant;
+import com.vaadin.flow.component.checkbox.dataview.CheckboxGroupListDataView;
 import com.vaadin.flow.component.checkbox.demo.data.DepartmentData;
 import com.vaadin.flow.component.checkbox.demo.entity.Department;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.provider.DataProvider;
+import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.demo.DemoView;
 import com.vaadin.flow.router.Route;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Collectors;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
+import java.util.Random;
 
 /**
  * View for {@link CheckboxGroup} demo.
@@ -57,6 +64,80 @@ public class CheckboxView extends DemoView {
         configurationForRequired(); // Validation
         themeVariantsHorizontal();// Theme Variants
         styling(); // Styling
+        dataViewDemo();
+    }
+
+    private void dataViewDemo() {
+        final CheckboxGroup<String> checkboxGroup = new CheckboxGroup<>();
+
+        final List<String> items = new ArrayList<>();
+        items.add("Item1");
+        items.add("Item4");
+        items.add("Item2");
+        items.add("Item3");
+
+        ListDataProvider<String> dataProvider = DataProvider.ofCollection(items);
+
+        final CheckboxGroupListDataView<String> dataView =
+                checkboxGroup.setDataProvider(dataProvider);
+
+        Button filterButton = new Button("Filter",
+                event -> dataView.withFilter(item -> item.equals("Item2")));
+
+        Button orderButton = new Button("Order",
+                event -> dataView.withSortComparator(String::compareTo));
+
+        Span size = new Span(String.valueOf(dataView.getDataSize()));
+
+        Button addButton = new Button("Add item", event -> {
+            dataProvider.getItems().add("Item" + new Random().nextInt(10));
+            dataProvider.refreshAll();
+            dataView.getDataSize();
+        });
+
+        Button deleteButton = new Button("Delete item", event -> {
+            dataProvider.getItems().removeAll(checkboxGroup.getValue());
+            dataProvider.refreshAll();
+            dataView.getDataSize();
+        });
+
+        Span containsItem = new Span(String.valueOf(dataView.dataContainsItem("Item1")));
+
+        dataView.addSizeChangeListener(event -> {
+            size.setText(String.valueOf(event.getSize()));
+            containsItem.setText(String.valueOf(dataView.dataContainsItem("Item1")));
+            System.out.println(dataView.getAllItems().collect(Collectors.toList()));
+        });
+
+        Span currentItemSpan = new Span("Item1");
+
+        Span hasItemSpan = new Span("--");
+
+        final String[] currentItem = {"Item1"};
+
+        Button nextItemButton = new Button("Next", event -> {
+            String nextItem = dataView.getNextItem(currentItem[0]);
+            currentItem[0] = nextItem != null ? nextItem : currentItem[0];
+            currentItemSpan.setText(currentItem[0]);
+        });
+
+        Button previousItemButton = new Button("Previous", event -> {
+            String previous = dataView.getPreviousItem(currentItem[0]);
+            currentItem[0] = previous != null ? previous : currentItem[0];
+            currentItemSpan.setText(currentItem[0]);
+        });
+
+        Button hasNextItemButton = new Button("Has Next", event -> {
+            hasItemSpan.setText(dataView.hasNextItem(currentItem[0]) ? "Yes" : "No");
+        });
+
+        Button hasPrevItemButton = new Button("Has Previous", event -> {
+            hasItemSpan.setText(dataView.hasPreviousItem(currentItem[0]) ? "Yes" : "No");
+        });
+
+        addCard("Data view checkbox group", checkboxGroup, addButton, deleteButton,
+                hasNextItemButton, hasPrevItemButton, nextItemButton, previousItemButton,
+                filterButton, orderButton, size, containsItem, currentItemSpan, hasItemSpan);
     }
 
     private void basicDemo() {

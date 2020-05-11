@@ -1,16 +1,22 @@
 package com.vaadin.flow.component.checkbox.tests;
 
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
 import com.vaadin.flow.component.checkbox.CheckboxGroupVariant;
 import com.vaadin.flow.component.checkbox.GeneratedVaadinCheckboxGroup;
+import com.vaadin.flow.component.checkbox.dataview.CheckboxGroupDataView;
+import com.vaadin.flow.component.checkbox.dataview.CheckboxGroupListDataView;
+import com.vaadin.flow.component.checkbox.dataview.ListDataView;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.NativeButton;
+import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.demo.DemoView;
 import com.vaadin.flow.router.Route;
+
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * View for {@link CheckboxGroup} demo.
@@ -54,6 +60,27 @@ public class CheckboxGroupDemoPage extends DemoView {
         addDisabledItems();
         addReadOnlyGroup();
         addComponentWithThemeVariant();
+        addDataViewDemo();
+    }
+
+    private void addDataViewDemo() {
+        CheckboxGroup<String> checkboxGroup = new CheckboxGroup<>();
+
+        final CheckboxGroupListDataView<String> dataView =
+                checkboxGroup.setDataProvider(DataProvider.ofItems("Item1", "Item2", "Item3"));
+
+        Button filterButton = new Button("Filter",
+                event -> dataView.withFilter(item -> item.equals("Item2")));
+
+        Button orderButton = new Button("Order",
+                event -> dataView.withOrder(String::compareTo));
+
+        String nextItem = dataView.getNextItem("Item2");
+        String previousItem = dataView.getPreviousItem("Item2");
+        boolean hasNextItem = dataView.hasNextItem("Item3");
+        boolean hasPreviousItem = dataView.hasPreviousItem("Item3");
+
+        addCard("Data view checkbox group", checkboxGroup, filterButton, orderButton);
     }
 
     @Override

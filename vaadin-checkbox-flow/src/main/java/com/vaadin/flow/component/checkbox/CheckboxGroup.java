@@ -17,6 +17,7 @@ package com.vaadin.flow.component.checkbox;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -26,12 +27,16 @@ import java.util.stream.Stream;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.ItemLabelGenerator;
+import com.vaadin.flow.component.checkbox.dataview.CheckboxGroupListDataView;
+import com.vaadin.flow.component.checkbox.dataview.CheckboxGroupListDataViewImpl;
+import com.vaadin.flow.data.provider.HasListDataView;
 import com.vaadin.flow.data.binder.HasDataProvider;
 import com.vaadin.flow.data.binder.HasItemsAndComponents;
 import com.vaadin.flow.data.provider.DataChangeEvent;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.KeyMapper;
 import com.vaadin.flow.data.provider.Query;
+import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.selection.MultiSelect;
 import com.vaadin.flow.data.selection.MultiSelectionEvent;
 import com.vaadin.flow.data.selection.MultiSelectionListener;
@@ -54,7 +59,8 @@ import elemental.json.JsonArray;
 public class CheckboxGroup<T>
         extends GeneratedVaadinCheckboxGroup<CheckboxGroup<T>, Set<T>>
         implements HasItemsAndComponents<T>, HasSize, HasValidation,
-        MultiSelect<CheckboxGroup<T>, T>, HasDataProvider<T> {
+        MultiSelect<CheckboxGroup<T>, T>, HasDataProvider<T>,
+        HasListDataView<T, CheckboxGroupListDataView<T>> {
 
     private static final String VALUE = "value";
 
@@ -71,6 +77,35 @@ public class CheckboxGroup<T>
     private final PropertyChangeListener validationListener = this::validateSelectionEnabledState;
     private Registration validationRegistration;
     private Registration dataProviderListenerRegistration;
+
+    @Override
+    public CheckboxGroupListDataView<T> setDataProvider(ListDataProvider<T> dataProvider) {
+        this.setDataProvider((DataProvider<T, ?>) dataProvider);
+        return getListDataView();
+    }
+
+    @Override
+    public CheckboxGroupListDataView<T> setDataProvider(Collection<T> items) {
+        return setDataProvider(DataProvider.ofCollection(items));
+    }
+
+    @Override
+    public CheckboxGroupListDataView<T> setDataProvider(Stream<T> items) {
+        return setDataProvider(DataProvider.fromStream(items));
+    }
+
+    @Override
+    public CheckboxGroupListDataView<T> setDataProvider(T... items) {
+        return setDataProvider(DataProvider.ofItems(items));
+    }
+
+    @Override
+    public CheckboxGroupListDataView<T> getListDataView() {
+        if (dataProvider instanceof ListDataProvider) {
+            return new CheckboxGroupListDataViewImpl<>(this);
+        }
+        throw new IllegalStateException("CheckboxGroupListDataView should be used with ListDataProvider");
+    }
 
     private static class CheckBoxItem<T> extends Checkbox
             implements ItemComponent<T> {
