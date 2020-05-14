@@ -33,10 +33,13 @@ import com.vaadin.flow.data.provider.HasListDataView;
 import com.vaadin.flow.data.provider.DataChangeEvent;
 import com.vaadin.flow.data.provider.KeyMapper;
 import com.vaadin.flow.data.provider.Query;
+import com.vaadin.flow.data.provider.DataController;
+import com.vaadin.flow.data.provider.SizeChangeEvent;
+import com.vaadin.flow.data.provider.DataView;
+import com.vaadin.flow.data.provider.SizeChangeListener;
 import com.vaadin.flow.data.binder.HasDataProvider;
 import com.vaadin.flow.data.binder.HasItemsAndComponents;
 import com.vaadin.flow.data.provider.ListDataProvider;
-import com.vaadin.flow.data.provider.SizeChangeAwareDataProvider;
 import com.vaadin.flow.data.selection.MultiSelect;
 import com.vaadin.flow.data.selection.MultiSelectionEvent;
 import com.vaadin.flow.data.selection.MultiSelectionListener;
@@ -68,6 +71,8 @@ public class CheckboxGroup<T>
 
     private DataProvider<T, ?> dataProvider = DataProvider.ofItems();
 
+    private final CheckboxGroupDataController dataController = new CheckboxGroupDataController();
+
     private boolean isReadOnly;
 
     private SerializablePredicate<T> itemEnabledProvider = item -> isEnabled();
@@ -78,23 +83,58 @@ public class CheckboxGroup<T>
     private Registration validationRegistration;
     private Registration dataProviderListenerRegistration;
 
+    /**
+     * {@link DataController} implementation responsible for data supply from
+     * tied data provider to {@link DataView} and handling {@link SizeChangeEvent}.
+     */
+    protected class CheckboxGroupDataController implements DataController<T> {
+
+        // listeners holder
+
+        @Override
+        public DataProvider<T, ?> getDataProvider() {
+            return dataProvider;
+        }
+
+        @Override
+        public Registration addSizeChangeListener(SizeChangeListener listener) {
+            // add listener to collection
+            throw new UnsupportedOperationException("Not implemented yet");
+        }
+
+        @Override
+        public int getDataSize() {
+            return dataProvider.size(new Query<>());
+        }
+
+        @Override
+        public Stream<T> getAllItems() {
+            return dataProvider.fetch(new Query<>());
+        }
+
+        /**
+         * Notifies {@link SizeChangeListener}'s about data set size change.
+         * Data set size change normally occurs on initial data load, filter change,
+         * or other data reset.
+         */
+        protected void fireSizeChangeEvent() {
+            // SizeChangeEvent<CheckboxGroup<T>> sizeChangeEvent =
+            //        new SizeChangeEvent<>(CheckboxGroup.this, getDataSize());
+            // notify listeners
+
+            throw new UnsupportedOperationException("Not implemented yet");
+        }
+    }
+
     @Override
     public CheckboxGroupListDataView<T> setDataProvider(ListDataProvider<T> dataProvider) {
-        SizeChangeAwareDataProvider<T> sizeAwareDataProvider =
-                SizeChangeAwareDataProvider.fromListDataProvider(dataProvider);
-        this.setDataProvider((DataProvider<T, ?>) sizeAwareDataProvider);
+        this.setDataProvider((DataProvider<T, ?>) dataProvider);
         return getListDataView();
     }
 
     @Override
     public CheckboxGroupListDataView<T> getListDataView() {
-        Objects.requireNonNull(dataProvider, "DataProvider cannot be null");
-        if (dataProvider instanceof ListDataProvider) {
-            return new CheckboxGroupListDataViewImpl<>(this, dataProvider);
-        }
-        throw new IllegalStateException(
-                String.format("CheckboxGroupListDataView is incompatible with %s instance",
-                        dataProvider.getClass().getCanonicalName()));
+        return new CheckboxGroupListDataViewImpl<>(dataController);
     }
 
     private static class CheckBoxItem<T> extends Checkbox
@@ -362,6 +402,8 @@ public class CheckboxGroup<T>
         clear();
         getDataProvider().fetch(new Query<>()).map(this::createCheckBox)
                 .forEach(this::add);
+
+        // Notify data controller listeners
     }
 
     private void refreshCheckboxes() {

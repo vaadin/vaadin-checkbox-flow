@@ -17,7 +17,7 @@ package com.vaadin.flow.component.checkbox.dataview;
 
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
 import com.vaadin.flow.data.provider.AbstractListDataView;
-import com.vaadin.flow.function.SerializablePredicate;
+import com.vaadin.flow.data.provider.DataController;
 
 /**
  * {@link CheckboxGroup} component list data view implementation which takes into
@@ -27,9 +27,9 @@ import com.vaadin.flow.function.SerializablePredicate;
  *        data type
  */
 public abstract class CheckboxGroupListDataView<T>
-        extends AbstractListDataView<T, CheckboxGroup<T>> implements CheckboxGroupDataView<T, SerializablePredicate<T>> {
+        extends AbstractListDataView<T, CheckboxGroup<T>> implements CheckboxGroupDataView<T> {
 
-    public CheckboxGroupListDataView(CheckboxGroup<T> component) {
-        super(component);
+    public CheckboxGroupListDataView(DataController<T> dataController) {
+        super(dataController);
     }
 }

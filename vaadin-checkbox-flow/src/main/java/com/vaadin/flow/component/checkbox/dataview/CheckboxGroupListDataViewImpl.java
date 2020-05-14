@@ -16,9 +16,9 @@
 package com.vaadin.flow.component.checkbox.dataview;
 
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
-import com.vaadin.flow.data.provider.DataProvider;
-import com.vaadin.flow.data.provider.ListDataProvider;
-import com.vaadin.flow.data.provider.SizeChangeAware;
+import com.vaadin.flow.data.provider.DataController;
+
+import java.util.List;
 
 /**
  * Implementation of {@link CheckboxGroupListDataView} interface for {@link CheckboxGroup} component.
@@ -28,17 +28,20 @@ import com.vaadin.flow.data.provider.SizeChangeAware;
  */
 public class CheckboxGroupListDataViewImpl<T> extends CheckboxGroupListDataView<T> {
 
-    public CheckboxGroupListDataViewImpl(CheckboxGroup<T> checkboxGroup, DataProvider<T, ?> dataProvider) {
-        super(checkboxGroup);
-        if (dataProvider instanceof SizeChangeAware) {
-            ((SizeChangeAware) dataProvider).setSizeChangeHandler(this);
-        }
+    public CheckboxGroupListDataViewImpl(DataController<T> dataController) {
+        super(dataController);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    protected ListDataProvider<T> getDataProvider() {
-        // CheckboxGroup data view is always backed by ListDataProvider
-        return (ListDataProvider<T>) this.component.getDataProvider();
+    public T getItemOnIndex(int index) {
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Index should be zero or greater");
+        }
+
+        List<T> allItems = getAllItemsAsList();
+        if (allItems.isEmpty()) {
+            throw new IndexOutOfBoundsException("Item requested on an empty data set");
+        }
+        return allItems.get(index);
     }
 }

@@ -24,8 +24,17 @@ import com.vaadin.flow.data.provider.DataView;
  *
  * @param <T>
  *         data type
- * @param <F>
- *         filter type
  */
-public interface CheckboxGroupDataView<T, F> extends DataView<T, F> {
+public interface CheckboxGroupDataView<T> extends DataView<T> {
+
+    /**
+     * Get the item at the given index in the sorted and filtered data set.
+     *
+     * @param index
+     *         index number
+     * @return item on index
+     * @throws IndexOutOfBoundsException
+     *         requested index is outside of the available data set.
+     */
+    T getItemOnIndex(int index);
 }
