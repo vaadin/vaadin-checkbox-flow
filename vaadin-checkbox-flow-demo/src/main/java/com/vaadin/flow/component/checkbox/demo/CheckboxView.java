@@ -19,8 +19,10 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
 import com.vaadin.flow.component.checkbox.CheckboxGroupVariant;
+import com.vaadin.flow.component.checkbox.dataview.CheckboxGroupListDataView;
 import com.vaadin.flow.component.checkbox.demo.data.DepartmentData;
 import com.vaadin.flow.component.checkbox.demo.entity.Department;
+import com.vaadin.flow.component.checkbox.demo.entity.Dish;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Paragraph;
@@ -37,6 +39,9 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.vaadin.flow.component.checkbox.demo.data.DishData.getDishOfTheDay;
+import static com.vaadin.flow.component.checkbox.demo.data.DishData.getDishes;
 
 /**
  * View for {@link CheckboxGroup} demo.
@@ -57,6 +62,7 @@ public class CheckboxView extends DemoView {
         configurationForRequired(); // Validation
         themeVariantsHorizontal();// Theme Variants
         styling(); // Styling
+        dataViewDemoWithCheckboxGroup(); // DataView usage demo
     }
 
     private void basicDemo() {
@@ -248,6 +254,35 @@ public class CheckboxView extends DemoView {
 
         // end-source-example
         addCard("Styling", "Styling references", p1, p2);
+    }
+
+    private void dataViewDemoWithCheckboxGroup() {
+        // begin-source-example
+        // source-example-heading: DataView usage with checkbox group
+        CheckboxGroup<Dish> checkboxGroup = new CheckboxGroup<>();
+
+        CheckboxGroupListDataView<Dish> dataView = checkboxGroup.
+                setDataProvider(getDishes());
+
+        Checkbox showVegetarianDishes = new Checkbox("Show only vegetarian dishes",
+                event -> dataView.withFilter(event.getValue() ? Dish::isVegetarian : null));
+
+        Div allDishesAvailable = new Div();
+        allDishesAvailable.setText(String.format("%d dishes available in total",
+                dataView.getDataSize()));
+
+        Button askForDishOfTheDay = new Button("Check availability of Dish Of The Day", event -> {
+            Dish dishOfTheDay = getDishOfTheDay();
+            Notification.show(dataView.isItemPresent(dishOfTheDay) ?
+                            "Dish of the day is available" :
+                            "Dish of the day is not available, sorry",
+                            2000,
+                            Notification.Position.MIDDLE);
+        });
+        // end-source-example
+
+        addCard("DataView usage with checkbox group", checkboxGroup, showVegetarianDishes,
+                allDishesAvailable, askForDishOfTheDay);
     }
 
     private static class Employee {

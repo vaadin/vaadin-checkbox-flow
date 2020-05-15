@@ -27,7 +27,7 @@ import com.vaadin.flow.data.provider.DataController;
  *        data type
  */
 public abstract class CheckboxGroupListDataView<T>
-        extends AbstractListDataView<T, CheckboxGroup<T>> implements CheckboxGroupDataView<T> {
+        extends AbstractListDataView<T> implements CheckboxGroupDataView<T> {
 
     public CheckboxGroupListDataView(DataController<T> dataController) {
         super(dataController);
