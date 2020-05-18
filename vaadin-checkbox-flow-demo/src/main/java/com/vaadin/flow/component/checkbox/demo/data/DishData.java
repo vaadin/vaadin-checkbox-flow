@@ -9,6 +9,12 @@ public class DishData {
 
     private DishData() {}
 
+    public static Collection<Dish> getDishes() {
+        return DISH_LIST;
+    }
+
+    public static Dish getDishOfTheDay() { return DISH_OF_THE_DAY; }
+
     private static final Dish DISH_OF_THE_DAY =
             new Dish(false, "Caprese Pasta Salad");
 
@@ -21,10 +27,4 @@ public class DishData {
                 new Dish(false, "Beef steak"),
                 DISH_OF_THE_DAY);
     }
-
-    public static Collection<Dish> getDishes() {
-        return DISH_LIST;
-    }
-
-    public static Dish getDishOfTheDay() { return DISH_OF_THE_DAY; }
 }
