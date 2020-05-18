@@ -7,10 +7,12 @@ import java.util.Collection;
 
 public class DishData {
 
-    private final static Dish DISH_OF_THE_DAY =
+    private DishData() {}
+
+    private static final Dish DISH_OF_THE_DAY =
             new Dish(false, "Caprese Pasta Salad");
 
-    private final static Collection<Dish> DISH_LIST = createDishList();
+    private static final Collection<Dish> DISH_LIST = createDishList();
 
     private static Collection<Dish> createDishList() {
         return Arrays.asList(

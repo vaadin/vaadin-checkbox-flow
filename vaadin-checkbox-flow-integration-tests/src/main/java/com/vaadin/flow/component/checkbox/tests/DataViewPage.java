@@ -21,33 +21,33 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.router.Route;
 
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Route("vaadin-checkbox-group-test-data-view")
 public class DataViewPage extends Div {
+
+    static final String CHECKBOX_GROUP = "checkbox-group-data-view";
+    static final String ITEMS_SIZE = "size-span-data-view";
+    static final String ITEM_PRESENT = "item-present-span-data-view";
+    static final String ALL_ITEMS = "all-items-span-data-view";
+    static final String ITEM_ON_INDEX = "item-on-index-data-view";
 
     public DataViewPage() {
         CheckboxGroup<String> checkboxGroup = new CheckboxGroup<>();
         CheckboxGroupListDataView<String> dataView =
                 checkboxGroup.setDataProvider("foo", "bar", "baz");
 
-        AtomicReference<String> currentItem = new AtomicReference<>("bar");
-
-        Span currentItemSpan = new Span(currentItem.get());
         Span sizeSpan = new Span(String.valueOf(dataView.getDataSize()));
         Span containsItemSpan = new Span(String.valueOf(dataView.isItemPresent("foo")));
         Span allItemsSpan = new Span(dataView.getAllItems().collect(Collectors.joining(",")));
         Span itemOnIndexSpan = new Span(dataView.getItemOnIndex(0));
 
-        dataView.addSizeChangeListener(event -> sizeSpan.setText(String.valueOf(event.getSize())));
+        checkboxGroup.setId(CHECKBOX_GROUP);
+        sizeSpan.setId(ITEMS_SIZE);
+        containsItemSpan.setId(ITEM_PRESENT);
+        allItemsSpan.setId(ALL_ITEMS);
+        itemOnIndexSpan.setId(ITEM_ON_INDEX);
 
-        checkboxGroup.setId("checkbox-group-data-view");
-        currentItemSpan.setId("current-item-span-data-view");
-        sizeSpan.setId("size-span-data-view");
-        allItemsSpan.setId("all-items-span-data-view");
-        itemOnIndexSpan.setId("item-on-index-data-view");
-
-        add(checkboxGroup, currentItemSpan, sizeSpan, containsItemSpan, allItemsSpan, itemOnIndexSpan);
+        add(checkboxGroup, sizeSpan, containsItemSpan, allItemsSpan, itemOnIndexSpan);
     }
 }

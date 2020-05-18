@@ -27,6 +27,15 @@ import java.util.concurrent.atomic.AtomicReference;
 @Route("vaadin-checkbox-group-test-list-data-view")
 public class ListDataViewPage extends Div {
 
+    static final String CHECKBOX_GROUP = "checkbox-group-list-data-view";
+    static final String CURRENT_ITEM = "current-item-span-list-data-view";
+    static final String HAS_NEXT_ITEM = "has-next-item-span-list-data-view";
+    static final String HAS_PREVIOUS_ITEM = "has-prev-item-span-list-data-view";
+    static final String NEXT_ITEM = "next-item-button-list-data-view";
+    static final String PREVIOUS_ITEM = "prev-item-button-list-data-view";
+    static final String FILTER_BUTTON = "filter-button-list-data-view";
+    static final String SORT_BUTTON = "sort-button-list-data-view";
+
     public ListDataViewPage() {
         CheckboxGroup<String> checkboxGroup = new CheckboxGroup<>();
         CheckboxGroupListDataView<String> dataView =
@@ -35,7 +44,6 @@ public class ListDataViewPage extends Div {
         AtomicReference<String> currentItem = new AtomicReference<>("bar");
 
         Span currentItemSpan = new Span(currentItem.get());
-
         Span hasNextItemSpan = new Span(String.valueOf(dataView.hasNextItem("foo")));
         Span hasPrevItemSpan = new Span(String.valueOf(dataView.hasPreviousItem("bar")));
 
@@ -50,18 +58,18 @@ public class ListDataViewPage extends Div {
             currentItemSpan.setText(currentItem.get());
         });
         Button filterButton = new Button("Filter Items",
-                event -> dataView.withFilter(item -> item.equals("bar")));
+                event -> dataView.withFilter("bar"::equals));
         Button sortButton = new Button("Sort Items",
                 event -> dataView.withSortComparator(String::compareTo));
 
-        checkboxGroup.setId("checkbox-group-list-data-view");
-        currentItemSpan.setId("current-item-span-list-data-view");
-        hasNextItemSpan.setId("has-next-item-span-list-data-view");
-        hasPrevItemSpan.setId("has-prev-item-span-list-data-view");
-        nextItemButton.setId("next-item-button-list-data-view");
-        prevItemButton.setId("prev-item-button-list-data-view");
-        filterButton.setId("filter-button-list-data-view");
-        sortButton.setId("sort-button-list-data-view");
+        checkboxGroup.setId(CHECKBOX_GROUP);
+        currentItemSpan.setId(CURRENT_ITEM);
+        hasNextItemSpan.setId(HAS_NEXT_ITEM);
+        hasPrevItemSpan.setId(HAS_PREVIOUS_ITEM);
+        nextItemButton.setId(NEXT_ITEM);
+        prevItemButton.setId(PREVIOUS_ITEM);
+        filterButton.setId(FILTER_BUTTON);
+        sortButton.setId(SORT_BUTTON);
 
         add(checkboxGroup, currentItemSpan, hasNextItemSpan, hasPrevItemSpan, filterButton,
                 sortButton, nextItemButton, prevItemButton);

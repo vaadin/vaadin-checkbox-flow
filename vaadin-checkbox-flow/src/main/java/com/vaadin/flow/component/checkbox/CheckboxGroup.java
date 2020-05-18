@@ -118,10 +118,6 @@ public class CheckboxGroup<T>
          * or other data reset.
          */
         protected void fireSizeChangeEvent() {
-            // SizeChangeEvent<CheckboxGroup<T>> sizeChangeEvent =
-            //        new SizeChangeEvent<>(CheckboxGroup.this, getDataSize());
-            // notify listeners
-
             throw new UnsupportedOperationException("Not implemented yet");
         }
     }
