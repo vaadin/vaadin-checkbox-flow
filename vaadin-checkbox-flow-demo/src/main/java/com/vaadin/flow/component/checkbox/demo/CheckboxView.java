@@ -167,7 +167,7 @@ public class CheckboxView extends DemoView {
             if (event.getValue().size() == items.size()) {
                 checkbox.setValue(true);
                 checkbox.setIndeterminate(false);
-            } else if (event.getValue().size() == 0) {
+            } else if (event.getValue().isEmpty()) {
                 checkbox.setValue(false);
                 checkbox.setIndeterminate(false);
             } else

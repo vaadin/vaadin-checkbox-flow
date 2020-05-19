@@ -83,6 +83,13 @@ public class CheckboxGroup<T>
     private Registration validationRegistration;
     private Registration dataProviderListenerRegistration;
 
+    public CheckboxGroup() {
+        super(Collections.emptySet(), Collections.emptySet(), JsonArray.class,
+                CheckboxGroup::presentationToModel,
+                CheckboxGroup::modelToPresentation);
+        registerValidation();
+    }
+
     /**
      * {@link DataController} implementation responsible for data supply from
      * tied data provider to {@link DataView} and handling {@link SizeChangeEvent}.
@@ -148,13 +155,6 @@ public class CheckboxGroup<T>
             return item;
         }
 
-    }
-
-    public CheckboxGroup() {
-        super(Collections.emptySet(), Collections.emptySet(), JsonArray.class,
-                CheckboxGroup::presentationToModel,
-                CheckboxGroup::modelToPresentation);
-        registerValidation();
     }
 
     @Override
