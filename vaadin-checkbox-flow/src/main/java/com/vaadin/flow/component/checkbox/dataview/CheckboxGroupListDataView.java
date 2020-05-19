@@ -19,6 +19,8 @@ import com.vaadin.flow.component.checkbox.CheckboxGroup;
 import com.vaadin.flow.data.provider.AbstractListDataView;
 import com.vaadin.flow.data.provider.DataController;
 
+import java.util.List;
+
 /**
  * {@link CheckboxGroup} component list data view implementation which takes into
  * account the component-specific and common list data API.
@@ -26,10 +28,22 @@ import com.vaadin.flow.data.provider.DataController;
  * @param <T>
  *        data type
  */
-public abstract class CheckboxGroupListDataView<T>
-        extends AbstractListDataView<T> implements CheckboxGroupDataView<T> {
+public class CheckboxGroupListDataView<T> extends AbstractListDataView<T> implements CheckboxGroupDataView<T> {
 
     public CheckboxGroupListDataView(DataController<T> dataController) {
         super(dataController);
+    }
+
+    @Override
+    public T getItemOnIndex(int index) {
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Expected zero or greater index, but was given: " + index);
+        }
+
+        List<T> allItems = getAllItemsAsList();
+        if (allItems.isEmpty()) {
+            throw new IndexOutOfBoundsException("Item requested on an empty data set");
+        }
+        return allItems.get(index);
     }
 }

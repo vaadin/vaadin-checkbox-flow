@@ -27,7 +27,6 @@ import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.checkbox.dataview.CheckboxGroupListDataView;
-import com.vaadin.flow.component.checkbox.dataview.CheckboxGroupListDataViewImpl;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.HasListDataView;
 import com.vaadin.flow.data.provider.DataChangeEvent;
@@ -96,7 +95,7 @@ public class CheckboxGroup<T>
      */
     protected class CheckboxGroupDataController implements DataController<T> {
 
-        // listeners holder
+        // TODO: Implement SizeChangeEvent handling for DataView #8345
 
         @Override
         public DataProvider<T, ?> getDataProvider() {
@@ -105,7 +104,6 @@ public class CheckboxGroup<T>
 
         @Override
         public Registration addSizeChangeListener(SizeChangeListener listener) {
-            // add listener to collection
             throw new UnsupportedOperationException("Not implemented yet");
         }
 
@@ -137,7 +135,7 @@ public class CheckboxGroup<T>
 
     @Override
     public CheckboxGroupListDataView<T> getListDataView() {
-        return new CheckboxGroupListDataViewImpl<>(dataController);
+        return new CheckboxGroupListDataView<>(dataController);
     }
 
     private static class CheckBoxItem<T> extends Checkbox
@@ -398,8 +396,6 @@ public class CheckboxGroup<T>
         clear();
         getDataProvider().fetch(new Query<>()).map(this::createCheckBox)
                 .forEach(this::add);
-
-        // Notify data controller listeners
     }
 
     private void refreshCheckboxes() {

@@ -82,11 +82,9 @@ public class CheckboxDemoPage extends DemoView {
         Checkbox valueChangeCheckbox = new Checkbox(
                 "Checkbox with a ValueChangeListener");
         Div message = new Div();
-        valueChangeCheckbox.addValueChangeListener(event -> {
-            message.setText(
-                    String.format("Checkbox value changed from '%s' to '%s'",
-                            event.getOldValue(), event.getValue()));
-        });
+        valueChangeCheckbox.addValueChangeListener(event -> message.setText(
+                String.format("Checkbox value changed from '%s' to '%s'",
+                        event.getOldValue(), event.getValue())));
         // end-source-example
         addCard("Checkbox with a ValueChangeListener", valueChangeCheckbox,
                 message);

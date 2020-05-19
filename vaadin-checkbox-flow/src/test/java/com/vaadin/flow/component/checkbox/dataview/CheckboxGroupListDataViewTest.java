@@ -42,13 +42,13 @@ public class CheckboxGroupListDataViewTest {
 
     private DataController<String> dataController;
 
-    private CheckboxGroupListDataViewImpl<String> dataView;
+    private CheckboxGroupListDataView<String> dataView;
 
     @Before
     public void init() {
         DATA_PROVIDER = DataProvider.ofCollection(ITEMS);
         dataController = new DataControllerStub();
-        dataView = new CheckboxGroupListDataViewImpl<>(dataController);
+        dataView = new CheckboxGroupListDataView<>(dataController);
     }
 
     @Test
