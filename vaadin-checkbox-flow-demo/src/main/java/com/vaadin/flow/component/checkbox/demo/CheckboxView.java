@@ -170,8 +170,6 @@ public class CheckboxView extends DemoView {
 
         private static List<Department> createDepartmentList() {
             List<Department> departmentList = new ArrayList<>();
-
-            departmentList = new ArrayList<>();
             departmentList.add(new Department(1, "Product",
                     "Development and maintenance of the official software products"));
             departmentList.add(new Department(2, "Services",
