@@ -23,11 +23,16 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.router.Route;
 
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
-@Route("vaadin-checkbox-group-test-list-data-view")
-public class ListDataViewPage extends Div {
+@Route("vaadin-checkbox-group-list-data-view")
+public class CheckboxGroupListDataViewPage extends Div {
 
-    static final String CHECKBOX_GROUP = "checkbox-group-list-data-view";
+    static final String CHECKBOX_GROUP = "checkbox-group-data-view";
+    static final String ITEMS_SIZE = "size-span-data-view";
+    static final String ITEM_PRESENT = "item-present-span-data-view";
+    static final String ALL_ITEMS = "all-items-span-data-view";
+    static final String ITEM_ON_INDEX = "item-on-index-data-view";
     static final String CURRENT_ITEM = "current-item-span-list-data-view";
     static final String HAS_NEXT_ITEM = "has-next-item-span-list-data-view";
     static final String HAS_PREVIOUS_ITEM = "has-prev-item-span-list-data-view";
@@ -36,10 +41,15 @@ public class ListDataViewPage extends Div {
     static final String FILTER_BUTTON = "filter-button-list-data-view";
     static final String SORT_BUTTON = "sort-button-list-data-view";
 
-    public ListDataViewPage() {
+    public CheckboxGroupListDataViewPage() {
         CheckboxGroup<String> checkboxGroup = new CheckboxGroup<>();
         CheckboxGroupListDataView<String> dataView =
                 checkboxGroup.setDataProvider("foo", "bar", "baz");
+
+        Span sizeSpan = new Span(String.valueOf(dataView.getDataSize()));
+        Span containsItemSpan = new Span(String.valueOf(dataView.isItemPresent("foo")));
+        Span allItemsSpan = new Span(dataView.getAllItems().collect(Collectors.joining(",")));
+        Span itemOnIndexSpan = new Span(dataView.getItemOnIndex(0));
 
         AtomicReference<String> currentItem = new AtomicReference<>("bar");
 
@@ -63,6 +73,10 @@ public class ListDataViewPage extends Div {
                 event -> dataView.withSortComparator(String::compareTo));
 
         checkboxGroup.setId(CHECKBOX_GROUP);
+        sizeSpan.setId(ITEMS_SIZE);
+        containsItemSpan.setId(ITEM_PRESENT);
+        allItemsSpan.setId(ALL_ITEMS);
+        itemOnIndexSpan.setId(ITEM_ON_INDEX);
         currentItemSpan.setId(CURRENT_ITEM);
         hasNextItemSpan.setId(HAS_NEXT_ITEM);
         hasPrevItemSpan.setId(HAS_PREVIOUS_ITEM);
@@ -71,7 +85,8 @@ public class ListDataViewPage extends Div {
         filterButton.setId(FILTER_BUTTON);
         sortButton.setId(SORT_BUTTON);
 
-        add(checkboxGroup, currentItemSpan, hasNextItemSpan, hasPrevItemSpan, filterButton,
+        add(checkboxGroup, sizeSpan, containsItemSpan, allItemsSpan, itemOnIndexSpan,
+                currentItemSpan, hasNextItemSpan, hasPrevItemSpan, filterButton,
                 sortButton, nextItemButton, prevItemButton);
     }
 }

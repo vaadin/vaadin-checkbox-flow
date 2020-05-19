@@ -41,9 +41,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import static com.vaadin.flow.component.checkbox.demo.CheckboxView.DishData.getDishOfTheDay;
-import static com.vaadin.flow.component.checkbox.demo.CheckboxView.DishData.getDishes;
-
 /**
  * View for {@link CheckboxGroup} demo.
  *
@@ -430,7 +427,7 @@ public class CheckboxView extends DemoView {
         CheckboxGroup<Dish> checkboxGroup = new CheckboxGroup<>();
 
         CheckboxGroupListDataView<Dish> dataView = checkboxGroup.
-                setDataProvider(getDishes());
+                setDataProvider(DishData.getDishes());
 
         Checkbox showVegetarianDishes = new Checkbox("Show only vegetarian dishes",
                 event -> dataView.withFilter(event.getValue() ? Dish::isVegetarian : null));
@@ -440,7 +437,7 @@ public class CheckboxView extends DemoView {
                 dataView.getDataSize()));
 
         Button askForDishOfTheDay = new Button("Check availability of Dish Of The Day", event -> {
-            Dish dishOfTheDay = getDishOfTheDay();
+            Dish dishOfTheDay = DishData.getDishOfTheDay();
             Notification.show(dataView.isItemPresent(dishOfTheDay) ?
                             "Dish of the day is available" :
                             "Dish of the day is not available, sorry",

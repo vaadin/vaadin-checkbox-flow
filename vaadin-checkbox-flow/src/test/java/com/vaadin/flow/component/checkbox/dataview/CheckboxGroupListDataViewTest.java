@@ -60,7 +60,7 @@ public class CheckboxGroupListDataViewTest {
     @Test
     public void getItemOnIndex_negativeIndex_throwsException() {
         exceptionRule.expect(IndexOutOfBoundsException.class);
-        exceptionRule.expectMessage("Index should be zero or greater");
+        exceptionRule.expectMessage("Expected zero or greater index, but was given: -1");
         dataView.getItemOnIndex(-1);
     }
 
