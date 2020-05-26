@@ -92,7 +92,7 @@ public class CheckboxGroup<T>
 
     @Override
     public CheckboxGroupListDataView<T> getListDataView() {
-        return new CheckboxGroupListDataView<>(() -> getDataProvider(), () -> this);
+        return new CheckboxGroupListDataView<>(() -> getDataProvider(), this);
     }
 
     private static class CheckBoxItem<T> extends Checkbox

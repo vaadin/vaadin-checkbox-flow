@@ -33,13 +33,18 @@ import com.vaadin.flow.function.SerializableSupplier;
 public class CheckboxGroupListDataView<T> extends AbstractListDataView<T>
         implements CheckboxGroupDataView<T> {
 
-    SerializableSupplier<CheckboxGroup<T>> checkboxSupplier;
-
+    /**
+     * Checkbox DataView constructor.
+     *
+     * @param dataProviderSupplier
+     *         data provider supplier
+     * @param checkboxGroup
+     *         checkbox instance for this DataView
+     */
     public CheckboxGroupListDataView(
             SerializableSupplier<DataProvider<T, ?>> dataProviderSupplier,
-            SerializableSupplier<CheckboxGroup<T>> checkboxSupplier) {
-        super(dataProviderSupplier, checkboxSupplier);
-        this.checkboxSupplier = checkboxSupplier;
+            CheckboxGroup<T> checkboxGroup) {
+        super(dataProviderSupplier, checkboxGroup);
     }
 
     @Override

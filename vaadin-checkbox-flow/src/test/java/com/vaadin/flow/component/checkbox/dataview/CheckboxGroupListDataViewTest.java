@@ -41,8 +41,7 @@ public class CheckboxGroupListDataViewTest {
     @Before
     public void init() {
         dataProvider = DataProvider.ofCollection(ITEMS);
-        dataView = new CheckboxGroupListDataView<>(() -> dataProvider,
-                () -> null);
+        dataView = new CheckboxGroupListDataView<>(() -> dataProvider, null);
     }
 
     @Test
