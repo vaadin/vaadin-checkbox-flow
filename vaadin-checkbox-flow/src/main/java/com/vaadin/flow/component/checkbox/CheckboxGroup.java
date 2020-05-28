@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,6 +36,7 @@ import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.binder.HasDataProvider;
 import com.vaadin.flow.data.binder.HasItemsAndComponents;
 import com.vaadin.flow.data.provider.ListDataProvider;
+import com.vaadin.flow.data.provider.SizeChangeEvent;
 import com.vaadin.flow.data.selection.MultiSelect;
 import com.vaadin.flow.data.selection.MultiSelectionEvent;
 import com.vaadin.flow.data.selection.MultiSelectionListener;
@@ -76,6 +78,8 @@ public class CheckboxGroup<T>
     private Registration validationRegistration;
     private Registration dataProviderListenerRegistration;
 
+    private int dataSize;
+
     public CheckboxGroup() {
         super(Collections.emptySet(), Collections.emptySet(), JsonArray.class,
                 CheckboxGroup::presentationToModel,
@@ -92,7 +96,7 @@ public class CheckboxGroup<T>
 
     @Override
     public CheckboxGroupListDataView<T> getListDataView() {
-        return new CheckboxGroupListDataView<>(() -> getDataProvider(), this);
+        return new CheckboxGroupListDataView<>(this::getDataProvider, this);
     }
 
     private static class CheckBoxItem<T> extends Checkbox
@@ -351,8 +355,19 @@ public class CheckboxGroup<T>
         keyMapper.removeAll();
         removeAll();
         clear();
+
+        final AtomicInteger itemsCount = new AtomicInteger(0);
         getDataProvider().fetch(new Query<>()).map(this::createCheckBox)
-                .forEach(this::add);
+                .forEach(component -> {
+                    add(component);
+                    itemsCount.incrementAndGet();
+                });
+
+        final int newDataSize = itemsCount.get();
+        if (dataSize != newDataSize) {
+            dataSize = newDataSize;
+            fireEvent(new SizeChangeEvent<>(this, newDataSize));
+        }
     }
 
     private void refreshCheckboxes() {
