@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
-import com.vaadin.flow.data.provider.AbstractDataViewListenerTest;
+import com.vaadin.flow.data.provider.AbstractListDataViewListenerTest;
 import com.vaadin.flow.data.provider.AbstractListDataView;
 import com.vaadin.flow.data.provider.HasListDataView;
 import org.junit.Assert;
@@ -30,7 +30,7 @@ import org.junit.rules.ExpectedException;
 
 import com.vaadin.flow.data.provider.DataProvider;
 
-public class CheckboxGroupListDataViewTest extends AbstractDataViewListenerTest {
+public class CheckboxGroupListDataViewTest extends AbstractListDataViewListenerTest {
 
     private final static Collection<String> ITEMS = Arrays
             .asList("first", "middle", "last");
