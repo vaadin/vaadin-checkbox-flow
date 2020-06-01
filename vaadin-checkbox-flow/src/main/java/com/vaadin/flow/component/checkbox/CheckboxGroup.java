@@ -376,7 +376,7 @@ public class CheckboxGroup<T>
             // Ignore new size requests unless the last one has been executed
             // so as to avoid multiple beforeClientResponses.
             if (sizeRequest == null) {
-                sizeRequest = context -> {
+                sizeRequest = ui -> {
                     fireSizeEvent();
                     sizeRequest = null;
                 };
