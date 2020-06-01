@@ -86,6 +86,8 @@ public class CheckboxGroup<T>
 
     private volatile int lastFetchedDataSize = -1;
 
+    private SerializableConsumer<UI> sizeRequest;
+
     public CheckboxGroup() {
         super(Collections.emptySet(), Collections.emptySet(), JsonArray.class,
                 CheckboxGroup::presentationToModel,
@@ -370,13 +372,19 @@ public class CheckboxGroup<T>
                         itemCounter.incrementAndGet();
                     });
             lastFetchedDataSize = itemCounter.get();
-        }
 
-        runBeforeClientResponse(ui -> {
-            // Size event is fired before client response so as to avoid
-            // multiple size change events during server round trips
-            fireSizeEvent();
-        });
+            // Ignore new size requests unless the last one has been executed
+            // so as to avoid multiple beforeClientResponses.
+            if (sizeRequest == null) {
+                sizeRequest = context -> {
+                    fireSizeEvent();
+                    sizeRequest = null;
+                };
+                // Size event is fired before client response so as to avoid
+                // multiple size change events during server round trips
+                runBeforeClientResponse(sizeRequest);
+            }
+        }
     }
 
     private void refreshCheckboxes() {
