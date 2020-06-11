@@ -16,6 +16,7 @@
 package com.vaadin.flow.component.checkbox;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -30,14 +31,15 @@ import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.checkbox.dataview.CheckboxGroupListDataView;
-import com.vaadin.flow.data.provider.DataProvider;
-import com.vaadin.flow.data.provider.HasListDataView;
-import com.vaadin.flow.data.provider.DataChangeEvent;
-import com.vaadin.flow.data.provider.KeyMapper;
-import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.binder.HasDataProvider;
 import com.vaadin.flow.data.binder.HasItemsAndComponents;
+import com.vaadin.flow.data.provider.DataChangeEvent;
+import com.vaadin.flow.data.provider.DataProvider;
+import com.vaadin.flow.data.provider.HasLazyDataView;
+import com.vaadin.flow.data.provider.HasListDataView;
+import com.vaadin.flow.data.provider.KeyMapper;
 import com.vaadin.flow.data.provider.ListDataProvider;
+import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.provider.SizeChangeEvent;
 import com.vaadin.flow.data.selection.MultiSelect;
 import com.vaadin.flow.data.selection.MultiSelectionEvent;
@@ -97,8 +99,9 @@ public class CheckboxGroup<T>
 
 
     @Override
-    public CheckboxGroupListDataView<T> setDataProvider(ListDataProvider<T> dataProvider) {
-        this.setDataProvider((DataProvider<T, ?>) dataProvider);
+    public CheckboxGroupListDataView<T> setDataSource(
+            ListDataProvider<T> dataProvider) {
+        this.setDataProvider(dataProvider);
         return getListDataView();
     }
 
@@ -124,7 +127,43 @@ public class CheckboxGroup<T>
 
     }
 
+    /**
+     * @inheritDocs
+     * @deprecated use {@link HasListDataView#setDataSource(Object[])} )}
+     */
     @Override
+    @Deprecated
+    public void setItems(T... items) {
+        setDataSource(items);
+    }
+
+    /**
+     * @inheritDocs
+     * @deprecated use {@link HasListDataView#setDataSource(Collection)}
+     */
+    @Override
+    @Deprecated
+    public void setItems(Collection<T> items) {
+        setDataSource(items);
+    }
+
+    /**
+     * @inheritDocs
+     * @deprecated use {@link HasListDataView#setDataSource(Stream)}
+     */
+    @Override
+    @Deprecated
+    public void setItems(Stream<T> streamOfItems) {
+        setDataSource(streamOfItems);
+    }
+
+    /**
+     * @inheritDocs
+     * @deprecated use instead one of the setDataSource methods from
+     * {@link HasListDataView} or {@link HasLazyDataView}
+     */
+    @Override
+    @Deprecated
     public void setDataProvider(DataProvider<T, ?> dataProvider) {
         this.dataProvider.set(dataProvider);
         reset();
@@ -163,7 +202,7 @@ public class CheckboxGroup<T>
      * The component doesn't accept {@code null} values. The value of a checkbox
      * group without any selected items is an empty set. You can use the
      * {@link #clear()} method to set the empty value.
-     * 
+     *
      * @param value
      *            the new value to set, not {@code null}
      * @throws NullPointerException
@@ -195,7 +234,9 @@ public class CheckboxGroup<T>
      * Gets the data provider.
      *
      * @return the data provider, not {@code null}
+     * @deprecated use {@link #getListDataView()} or getLazyDataView() instead
      */
+    @Deprecated
     public DataProvider<T, ?> getDataProvider() {
         return dataProvider != null ? dataProvider.get() : null;
     }

@@ -342,7 +342,7 @@ public class CheckboxGroupTest {
         CheckboxGroup<Wrapper> checkboxGroup = new CheckboxGroup<>();
         checkboxGroup.setItemLabelGenerator(Wrapper::getLabel);
         ListDataProvider<Wrapper> dataProvider = new ListDataProvider<>(items);
-        checkboxGroup.setDataProvider(dataProvider);
+        checkboxGroup.setDataSource(dataProvider);
         return checkboxGroup;
     }
 
@@ -351,7 +351,7 @@ public class CheckboxGroupTest {
         CheckboxGroup<Wrapper> checkboxGroup = new CheckboxGroup<>();
         checkboxGroup.setItemLabelGenerator(Wrapper::getLabel);
         ListDataProvider<Wrapper> dataProvider = new CustomDataProvider(items);
-        checkboxGroup.setDataProvider(dataProvider);
+        checkboxGroup.setDataSource(dataProvider);
         return checkboxGroup;
     }
 
