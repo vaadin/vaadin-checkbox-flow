@@ -30,15 +30,19 @@ import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.checkbox.dataview.CheckboxGroupDataView;
+import com.vaadin.flow.component.checkbox.dataview.CheckboxGroupDataViewImpl;
 import com.vaadin.flow.component.checkbox.dataview.CheckboxGroupListDataView;
 import com.vaadin.flow.data.binder.HasDataProvider;
 import com.vaadin.flow.data.binder.HasItemsAndComponents;
 import com.vaadin.flow.data.provider.DataChangeEvent;
 import com.vaadin.flow.data.provider.DataProvider;
+import com.vaadin.flow.data.provider.HasDataView;
 import com.vaadin.flow.data.provider.HasLazyDataView;
 import com.vaadin.flow.data.provider.HasListDataView;
 import com.vaadin.flow.data.provider.KeyMapper;
 import com.vaadin.flow.data.provider.ListDataProvider;
+import com.vaadin.flow.data.provider.ListDataView;
 import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.provider.SizeChangeEvent;
 import com.vaadin.flow.data.selection.MultiSelect;
@@ -65,7 +69,8 @@ public class CheckboxGroup<T>
         extends GeneratedVaadinCheckboxGroup<CheckboxGroup<T>, Set<T>>
         implements HasItemsAndComponents<T>, HasSize, HasValidation,
         MultiSelect<CheckboxGroup<T>, T>, HasDataProvider<T>,
-        HasListDataView<T, CheckboxGroupListDataView<T>> {
+        HasListDataView<T, CheckboxGroupListDataView<T>>,
+        HasDataView<T, CheckboxGroupDataView<T>> {
 
     private static final String VALUE = "value";
 
@@ -90,6 +95,8 @@ public class CheckboxGroup<T>
 
     private SerializableConsumer<UI> sizeRequest;
 
+    private CheckboxGroupDataView<T> dataView;
+
     public CheckboxGroup() {
         super(Collections.emptySet(), Collections.emptySet(), JsonArray.class,
                 CheckboxGroup::presentationToModel,
@@ -97,6 +104,12 @@ public class CheckboxGroup<T>
         registerValidation();
     }
 
+    @Override
+    public CheckboxGroupDataView<T> setDataSource(
+            DataProvider<T, ?> dataProvider) {
+        setDataProvider(dataProvider);
+        return getDataView();
+    }
 
     @Override
     public CheckboxGroupListDataView<T> setDataSource(
@@ -107,7 +120,29 @@ public class CheckboxGroup<T>
 
     @Override
     public CheckboxGroupListDataView<T> getListDataView() {
-        return new CheckboxGroupListDataView<>(this::getDataProvider, this);
+        if (getDataProvider() instanceof ListDataProvider) {
+            if (dataView == null || !(dataView instanceof ListDataView)) {
+                dataView = new CheckboxGroupListDataView<>(
+                        this::getDataProvider, this);
+            }
+        }
+        return (CheckboxGroupListDataView) dataView;
+    }
+
+    /**
+     * Getter for getting a generic CheckboxGroupDataView. This should be used
+     * only when
+     * neither {@link #getListDataView()} nor #getLazyDataView are applicable
+     * for the underlying dataSource.
+     *
+     * @return DataView instance implementing {@link CheckboxGroupDataView}
+     */
+    public CheckboxGroupDataView<T> getDataView() {
+        if (dataView == null) {
+            dataView = new CheckboxGroupDataViewImpl(this::getDataProvider,
+                    this);
+        }
+        return dataView;
     }
 
     private static class CheckBoxItem<T> extends Checkbox
