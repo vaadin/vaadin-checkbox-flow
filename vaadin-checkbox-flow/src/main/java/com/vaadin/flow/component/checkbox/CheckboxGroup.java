@@ -38,7 +38,6 @@ import com.vaadin.flow.data.binder.HasItemsAndComponents;
 import com.vaadin.flow.data.provider.DataChangeEvent;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.HasDataView;
-import com.vaadin.flow.data.provider.HasLazyDataView;
 import com.vaadin.flow.data.provider.HasListDataView;
 import com.vaadin.flow.data.provider.KeyMapper;
 import com.vaadin.flow.data.provider.ListDataProvider;
@@ -125,15 +124,18 @@ public class CheckboxGroup<T>
                 dataView = new CheckboxGroupListDataView<>(
                         this::getDataProvider, this);
             }
+            return (CheckboxGroupListDataView) dataView;
         }
-        return (CheckboxGroupListDataView) dataView;
+        throw new IllegalStateException(
+                "Required ListDataProvider, but got " + getDataProvider()
+                        .getClass().getSuperclass().getSimpleName());
     }
 
     /**
-     * Getter for getting a generic CheckboxGroupDataView. This should be used
-     * only when
-     * neither {@link #getListDataView()} nor #getLazyDataView are applicable
-     * for the underlying dataSource.
+     * Getter for getting a generic CheckboxGroupDataView.
+     * <p>
+     * {@link #getListDataView()} is recommended when the backing data source is
+     * a List.
      *
      * @return DataView instance implementing {@link CheckboxGroupDataView}
      */
@@ -163,7 +165,7 @@ public class CheckboxGroup<T>
     }
 
     /**
-     * @inheritDocs
+     * {@inheritDoc}
      * @deprecated use {@link HasListDataView#setDataSource(Object[])} )}
      */
     @Override
@@ -173,7 +175,7 @@ public class CheckboxGroup<T>
     }
 
     /**
-     * @inheritDocs
+     * {@inheritDoc}
      * @deprecated use {@link HasListDataView#setDataSource(Collection)}
      */
     @Override
@@ -183,7 +185,7 @@ public class CheckboxGroup<T>
     }
 
     /**
-     * @inheritDocs
+     * {@inheritDoc}
      * @deprecated use {@link HasListDataView#setDataSource(Stream)}
      */
     @Override
@@ -193,9 +195,9 @@ public class CheckboxGroup<T>
     }
 
     /**
-     * @inheritDocs
+     * {@inheritDoc}
      * @deprecated use instead one of the setDataSource methods from
-     * {@link HasListDataView} or {@link HasLazyDataView}
+     * {@link HasListDataView}
      */
     @Override
     @Deprecated

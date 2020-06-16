@@ -22,6 +22,7 @@ import java.util.stream.Stream;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
+import com.vaadin.flow.data.provider.AbstractDataView;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.provider.SizeChangeEvent;
@@ -38,10 +39,7 @@ import com.vaadin.flow.shared.Registration;
  *         item type
  * @since
  */
-public class CheckboxGroupDataViewImpl<T> implements CheckboxGroupDataView<T> {
-
-    protected SerializableSupplier<? extends DataProvider<T, ?>> dataProviderSupplier;
-    protected CheckboxGroup<T> checkboxGroup;
+public class CheckboxGroupDataViewImpl<T> extends AbstractDataView<T> implements CheckboxGroupDataView<T> {
 
     /**
      * Constructs a new DataView.
@@ -54,8 +52,7 @@ public class CheckboxGroupDataViewImpl<T> implements CheckboxGroupDataView<T> {
     public CheckboxGroupDataViewImpl(
             SerializableSupplier<DataProvider<T, ?>> dataProviderSupplier,
             CheckboxGroup<T> checkboxGroup) {
-        this.dataProviderSupplier = dataProviderSupplier;
-        this.checkboxGroup = checkboxGroup;
+        super(dataProviderSupplier, checkboxGroup);
     }
 
     @Override
@@ -70,16 +67,6 @@ public class CheckboxGroupDataViewImpl<T> implements CheckboxGroupDataView<T> {
     }
 
     @Override
-    public Stream<T> getItems() {
-        return dataProviderSupplier.get().fetch(new Query<>());
-    }
-
-    @Override
-    public int getSize() {
-        return dataProviderSupplier.get().size(new Query<>());
-    }
-
-    @Override
     public boolean contains(T item) {
         final DataProvider<T, ?> dataProvider = dataProviderSupplier.get();
         final Object itemIdentifier = dataProvider.getId(item);
@@ -88,10 +75,7 @@ public class CheckboxGroupDataViewImpl<T> implements CheckboxGroupDataView<T> {
     }
 
     @Override
-    public Registration addSizeChangeListener(
-            ComponentEventListener<SizeChangeEvent<?>> listener) {
-        Objects.requireNonNull(listener, "SizeChangeListener cannot be null");
-        return ComponentUtil.addListener(checkboxGroup, SizeChangeEvent.class,
-                (ComponentEventListener) listener);
+    protected Class<?> getSupportedDataProviderType() {
+        return DataProvider.class;
     }
 }
