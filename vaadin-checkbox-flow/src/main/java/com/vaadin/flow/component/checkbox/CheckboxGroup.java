@@ -126,9 +126,10 @@ public class CheckboxGroup<T>
             }
             return (CheckboxGroupListDataView) dataView;
         }
-        throw new IllegalStateException(
-                "Required ListDataProvider, but got " + getDataProvider()
-                        .getClass().getSuperclass().getSimpleName());
+        throw new IllegalStateException(String.format(
+                "Required ListDataProvider, but got '%s'. Use 'getDataView()' "
+                        + "to get a generic DataView instance.",
+                getDataProvider().getClass().getSuperclass().getSimpleName()));
     }
 
     /**
@@ -139,6 +140,7 @@ public class CheckboxGroup<T>
      *
      * @return DataView instance implementing {@link CheckboxGroupDataView}
      */
+    @Override
     public CheckboxGroupDataView<T> getDataView() {
         if (dataView == null) {
             dataView = new CheckboxGroupDataViewImpl(this::getDataProvider,
