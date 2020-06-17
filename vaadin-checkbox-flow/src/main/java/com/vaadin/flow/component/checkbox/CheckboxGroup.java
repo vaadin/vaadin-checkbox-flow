@@ -41,7 +41,6 @@ import com.vaadin.flow.data.provider.HasDataView;
 import com.vaadin.flow.data.provider.HasListDataView;
 import com.vaadin.flow.data.provider.KeyMapper;
 import com.vaadin.flow.data.provider.ListDataProvider;
-import com.vaadin.flow.data.provider.ListDataView;
 import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.provider.SizeChangeEvent;
 import com.vaadin.flow.data.selection.MultiSelect;
@@ -94,8 +93,6 @@ public class CheckboxGroup<T>
 
     private SerializableConsumer<UI> sizeRequest;
 
-    private CheckboxGroupDataView<T> dataView;
-
     public CheckboxGroup() {
         super(Collections.emptySet(), Collections.emptySet(), JsonArray.class,
                 CheckboxGroup::presentationToModel,
@@ -120,11 +117,7 @@ public class CheckboxGroup<T>
     @Override
     public CheckboxGroupListDataView<T> getListDataView() {
         if (getDataProvider() instanceof ListDataProvider) {
-            if (dataView == null || !(dataView instanceof ListDataView)) {
-                dataView = new CheckboxGroupListDataView<>(
-                        this::getDataProvider, this);
-            }
-            return (CheckboxGroupListDataView) dataView;
+            return new CheckboxGroupListDataView<>(this::getDataProvider, this);
         }
         throw new IllegalStateException(String.format(
                 "Required ListDataProvider, but got '%s'. Use 'getDataView()' "
@@ -142,11 +135,8 @@ public class CheckboxGroup<T>
      */
     @Override
     public CheckboxGroupDataView<T> getDataView() {
-        if (dataView == null) {
-            dataView = new CheckboxGroupDataViewImpl(this::getDataProvider,
+        return new CheckboxGroupDataViewImpl(this::getDataProvider,
                     this);
-        }
-        return dataView;
     }
 
     private static class CheckBoxItem<T> extends Checkbox
