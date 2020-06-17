@@ -50,6 +50,7 @@ import com.vaadin.flow.dom.PropertyChangeEvent;
 import com.vaadin.flow.dom.PropertyChangeListener;
 import com.vaadin.flow.function.SerializableConsumer;
 import com.vaadin.flow.function.SerializablePredicate;
+import com.vaadin.flow.function.ValueProvider;
 import com.vaadin.flow.shared.Registration;
 
 import elemental.json.Json;
@@ -76,6 +77,8 @@ public class CheckboxGroup<T>
 
     private final AtomicReference<DataProvider<T, ?>> dataProvider =
             new AtomicReference<>(DataProvider.ofItems());
+
+    private ValueProvider<T, ?> identityProvider = ValueProvider.identity();
 
     private boolean isReadOnly;
 
@@ -195,6 +198,7 @@ public class CheckboxGroup<T>
     @Deprecated
     public void setDataProvider(DataProvider<T, ?> dataProvider) {
         this.dataProvider.set(dataProvider);
+        this.identityProvider = dataProvider::getId;
         reset();
 
         if (dataProviderListenerRegistration != null) {
@@ -402,6 +406,19 @@ public class CheckboxGroup<T>
         super.setInvalid(invalid);
     }
 
+    /**
+     * Sets identity provider to be used for getting item identifier and
+     * compare the items using that identifier.
+     *
+     * @param identityProvider
+     *           function that returns the non-null identifier for a given item
+     */
+    public void setIdentityProvider(ValueProvider<T, ?> identityProvider) {
+        Objects.requireNonNull(identityProvider,
+                "Item identity provider cannot be null");
+        this.identityProvider = identityProvider;
+    }
+
     @Override
     protected boolean valueEquals(Set<T> value1, Set<T> value2) {
         assert value1 != null && value2 != null;
@@ -412,9 +429,9 @@ public class CheckboxGroup<T>
         if (getDataProvider() == null) {
             return super.valueEquals(value1, value2);
         }
-        Set<Object> ids1 = value1.stream().map(getDataProvider()::getId)
+        Set<Object> ids1 = value1.stream().map(identityProvider)
                 .collect(Collectors.toSet());
-        Set<Object> ids2 = value2.stream().map(getDataProvider()::getId)
+        Set<Object> ids2 = value2.stream().map(identityProvider)
                 .collect(Collectors.toSet());
         return ids1.equals(ids2);
     }
@@ -550,10 +567,7 @@ public class CheckboxGroup<T>
     }
 
     private Object getItemId(T item) {
-        if (getDataProvider() == null) {
-            return item;
-        }
-        return getDataProvider().getId(item);
+        return identityProvider.apply(item);
     }
 
     private void runBeforeClientResponse(SerializableConsumer<UI> command) {
