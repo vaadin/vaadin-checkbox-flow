@@ -20,7 +20,6 @@ import com.vaadin.flow.component.checkbox.CheckboxGroup;
 import com.vaadin.flow.data.provider.AbstractDataView;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.function.SerializableSupplier;
-import com.vaadin.flow.function.ValueProvider;
 
 /**
  * Implementation of the base DataView applicable for use with any
@@ -71,19 +70,5 @@ public class CheckboxGroupDataViewImpl<T> extends AbstractDataView<T>
     @Override
     protected Class<?> getSupportedDataProviderType() {
         return DataProvider.class;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public void setIdentityProvider(ValueProvider<T, ?> identityProvider) {
-        super.setIdentityProvider(identityProvider);
-        if (!(component instanceof CheckboxGroup)) {
-            throw new IllegalStateException(String.format(
-                    "CheckboxGroupDataView cannot be used with component %s. " +
-                    "Use CheckboxGroup component instead.",
-                    component.getClass().getSimpleName()));
-        }
-        CheckboxGroup<T> checkboxGroup = (CheckboxGroup<T>) component;
-        checkboxGroup.setIdentityProvider(identityProvider);
     }
 }
