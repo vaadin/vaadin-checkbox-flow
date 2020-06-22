@@ -40,7 +40,7 @@ import com.vaadin.flow.data.provider.DataChangeEvent;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.HasDataView;
 import com.vaadin.flow.data.provider.HasListDataView;
-import com.vaadin.flow.data.provider.IdentityProvider;
+import com.vaadin.flow.data.provider.IdentifierProvider;
 import com.vaadin.flow.data.provider.KeyMapper;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.provider.Query;
@@ -414,10 +414,10 @@ public class CheckboxGroup<T>
         if (getDataProvider() == null) {
             return super.valueEquals(value1, value2);
         }
-        IdentityProvider<T> identityProvider = getIdentityProvider();
-        Set<Object> ids1 = value1.stream().map(identityProvider)
+        IdentifierProvider<T> identifierProvider = getIdentifierProvider();
+        Set<Object> ids1 = value1.stream().map(identifierProvider)
                 .collect(Collectors.toSet());
-        Set<Object> ids2 = value2.stream().map(identityProvider)
+        Set<Object> ids2 = value2.stream().map(identifierProvider)
                 .collect(Collectors.toSet());
         return ids1.equals(ids2);
     }
@@ -553,7 +553,7 @@ public class CheckboxGroup<T>
     }
 
     private Object getItemId(T item) {
-        return getIdentityProvider().apply(item);
+        return getIdentifierProvider().apply(item);
     }
 
     private void runBeforeClientResponse(SerializableConsumer<UI> command) {
@@ -570,19 +570,19 @@ public class CheckboxGroup<T>
     }
 
     @SuppressWarnings("unchecked")
-    private IdentityProvider<T> getIdentityProvider() {
-        IdentityProvider<T> identityProviderObject =
-                (IdentityProvider<T>) ComponentUtil.getData(this,
-                        IdentityProvider.class);
-        if (identityProviderObject == null) {
+    private IdentifierProvider<T> getIdentifierProvider() {
+        IdentifierProvider<T> identifierProviderObject =
+                (IdentifierProvider<T>) ComponentUtil.getData(this,
+                        IdentifierProvider.class);
+        if (identifierProviderObject == null) {
             DataProvider<T, ?> dataProvider = getDataProvider();
             if (dataProvider != null) {
                 return dataProvider::getId;
             } else {
-                return IdentityProvider.identity();
+                return IdentifierProvider.identity();
             }
         } else {
-            return identityProviderObject;
+            return identifierProviderObject;
         }
     }
 }
