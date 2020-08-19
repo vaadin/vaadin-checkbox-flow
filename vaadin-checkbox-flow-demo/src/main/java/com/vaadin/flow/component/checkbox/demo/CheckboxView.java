@@ -196,11 +196,11 @@ public class CheckboxView extends DemoView {
         // begin-source-example
         // source-example-heading: Helper text and component
         CheckboxGroup<Department> checkboxGroup = new CheckboxGroup<>();
-        checkboxGroup.setLabel("Department");
+        checkboxGroup.setLabel("Departments");
         List<Department> departmentList = getDepartments();
         checkboxGroup.setItems(departmentList);
         checkboxGroup.addThemeVariants(CheckboxGroupVariant.LUMO_VERTICAL);
-        checkboxGroup.setHelperText("Choose your current department");
+        checkboxGroup.setHelperText("Choose your current departments");
 
         CheckboxGroup<String> checkboxGroupHelperComponent = new CheckboxGroup<>();
         checkboxGroupHelperComponent.setLabel("Options");
@@ -275,9 +275,10 @@ public class CheckboxView extends DemoView {
         // begin-source-example
         // source-example-heading: Helper text above the field
         CheckboxGroup<Department> checkboxGroup = new CheckboxGroup<>();
+        checkboxGroup.setLabel("Departments");
         List<Department> departmentList = getDepartments();
         checkboxGroup.setItems(departmentList);
-        checkboxGroup.setHelperText("Choose your current department");
+        checkboxGroup.setHelperText("Choose your current departments");
         checkboxGroup
               .addThemeVariants(CheckboxGroupVariant.LUMO_HELPER_ABOVE_FIELD);
 
