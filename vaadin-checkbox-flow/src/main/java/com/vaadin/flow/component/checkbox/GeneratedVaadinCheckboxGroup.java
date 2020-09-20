@@ -390,8 +390,7 @@ public abstract class GeneratedVaadinCheckboxGroup<R extends GeneratedVaadinChec
             SerializableFunction<T, P> modelToPresentation) {
         super("value", defaultValue, elementPropertyType, presentationToModel,
                 modelToPresentation);
-        if (initialValue != null) {
-            setModelValue(initialValue, false);
+        if (getElement().getProperty("value") == null && initialValue != null) {
             setPresentationValue(initialValue);
         }
     }
@@ -410,8 +409,7 @@ public abstract class GeneratedVaadinCheckboxGroup<R extends GeneratedVaadinChec
     public GeneratedVaadinCheckboxGroup(T initialValue, T defaultValue,
             boolean acceptNullValues) {
         super("value", defaultValue, acceptNullValues);
-        if (initialValue != null) {
-            setModelValue(initialValue, false);
+        if (getElement().getProperty("value") == null && initialValue != null) {
             setPresentationValue(initialValue);
         }
     }
@@ -441,8 +439,7 @@ public abstract class GeneratedVaadinCheckboxGroup<R extends GeneratedVaadinChec
             SerializableBiFunction<R, T, P> modelToPresentation) {
         super("value", defaultValue, elementPropertyType, presentationToModel,
                 modelToPresentation);
-        if (initialValue != null) {
-            setModelValue(initialValue, false);
+        if (getElement().getProperty("value") == null && initialValue != null) {
             setPresentationValue(initialValue);
         }
     }
