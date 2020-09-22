@@ -99,7 +99,7 @@ public class CheckboxGroup<T>
     public CheckboxGroup() {
         super(Collections.emptySet(), Collections.emptySet(), JsonArray.class,
                 CheckboxGroup::presentationToModel,
-                CheckboxGroup::modelToPresentation);
+                CheckboxGroup::modelToPresentation, true);
         registerValidation();
     }
 
