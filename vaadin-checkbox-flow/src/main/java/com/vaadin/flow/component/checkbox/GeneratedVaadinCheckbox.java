@@ -347,8 +347,7 @@ public abstract class GeneratedVaadinCheckbox<R extends GeneratedVaadinCheckbox<
             SerializableFunction<T, P> modelToPresentation) {
         super("checked", defaultValue, elementPropertyType, presentationToModel,
                 modelToPresentation);
-        if (getElement().getProperty("checked") == null
-                && initialValue != null) {
+        if (initialValue != null) {
             setPresentationValue(initialValue);
         }
     }
